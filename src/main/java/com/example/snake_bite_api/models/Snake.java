@@ -3,6 +3,8 @@ package com.example.snake_bite_api.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "snakes")
@@ -25,4 +27,6 @@ public class Snake {
     @JoinColumn(name = "snake_id")
     private Admin admin;
 
+    @ManyToMany(mappedBy = "snakes")
+    private List<Symptom> symptoms;
 }
