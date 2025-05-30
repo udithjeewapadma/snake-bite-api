@@ -23,4 +23,7 @@ public class Symptom {
             inverseJoinColumns = @JoinColumn(name = "symptom_id")
     )
     private List<Snake> snakes;
+
+    @OneToMany(mappedBy = "symptom", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<FirstAid> firstAids;
 }
