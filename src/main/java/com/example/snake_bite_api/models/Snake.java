@@ -29,4 +29,8 @@ public class Snake {
 
     @ManyToMany(mappedBy = "snakes")
     private List<Symptom> symptoms;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
