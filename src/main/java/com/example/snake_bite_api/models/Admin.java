@@ -20,4 +20,6 @@ public class Admin {
     @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Snake> snakes;
 
+    @OneToMany
+    private List<RequestNewSnake> requestNewSnakes;
 }

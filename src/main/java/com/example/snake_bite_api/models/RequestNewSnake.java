@@ -16,4 +16,8 @@ public class RequestNewSnake {
     @ManyToOne
     @JoinTable(name = "user_id")
     private User user;
+
+    @ManyToOne
+    @JoinTable(name = "admin_id")
+    private Admin admin;
 }
