@@ -4,6 +4,7 @@ import com.example.snake_bite_api.controller.dto.request.CreateUserRequestDTO;
 import com.example.snake_bite_api.controller.dto.response.UserResponseDTO;
 import com.example.snake_bite_api.models.User;
 import com.example.snake_bite_api.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserResponseDTO createUser(@RequestBody CreateUserRequestDTO createUserRequestDTO) {
+    public UserResponseDTO createUser(@Valid @RequestBody CreateUserRequestDTO createUserRequestDTO) {
 
         User user = userService.createUser(createUserRequestDTO);
         UserResponseDTO userResponseDTO = new UserResponseDTO();
