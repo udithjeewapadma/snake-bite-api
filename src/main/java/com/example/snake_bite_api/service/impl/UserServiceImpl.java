@@ -1,0 +1,26 @@
+package com.example.snake_bite_api.service.impl;
+
+import com.example.snake_bite_api.controller.dto.request.CreateUserRequestDTO;
+import com.example.snake_bite_api.models.User;
+import com.example.snake_bite_api.repository.UserRepository;
+import com.example.snake_bite_api.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    public User createUser(CreateUserRequestDTO createUserRequestDTO) {
+
+        User user = new User();
+        user.setUsername(createUserRequestDTO.getUsername());
+        user.setEmail(createUserRequestDTO.getEmail());
+        user.setPhoneNumber(createUserRequestDTO.getPhoneNumber());
+
+        return userRepository.save(user);
+    }
+}
