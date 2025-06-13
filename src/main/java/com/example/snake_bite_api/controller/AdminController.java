@@ -45,4 +45,16 @@ public class AdminController {
     public void deleteAdmin(@PathVariable("admin-id") Long adminId) {
         adminService.deleteAdminById(adminId);
     }
+
+    @PutMapping("/{admin-id}")
+    private AdminResponseDTO updateAdmin(@PathVariable("admin-id") Long id,
+                                         @RequestBody CreateAdminRequestDTO createAdminRequestDTO) {
+        Admin admin = adminService.updateAdminById(id, createAdminRequestDTO);
+        AdminResponseDTO adminResponseDTO = new AdminResponseDTO();
+        adminResponseDTO.setId(admin.getId());
+        adminResponseDTO.setAdminName(admin.getAdminName());
+        adminResponseDTO.setEmail(admin.getEmail());
+        adminResponseDTO.setPhoneNumber(admin.getPhoneNumber());
+        return adminResponseDTO;
+    }
 }

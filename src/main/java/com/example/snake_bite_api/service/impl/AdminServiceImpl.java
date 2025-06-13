@@ -56,4 +56,15 @@ public class AdminServiceImpl implements AdminService {
     public void deleteAdminById(Long id) {
         adminRepository.deleteById(id);
     }
+
+    @Override
+    public Admin updateAdminById(Long id, CreateAdminRequestDTO createAdminRequestDTO) {
+
+        Admin existingAdmin = adminRepository.findById(id)
+                .orElseThrow(() -> new AdminNotFoundException("Admin not found"));
+        existingAdmin.setAdminName(createAdminRequestDTO.getAdminName());
+        existingAdmin.setEmail(createAdminRequestDTO.getEmail());
+        existingAdmin.setPhoneNumber(createAdminRequestDTO.getPhoneNumber());
+        return adminRepository.save(existingAdmin);
+    }
 }
