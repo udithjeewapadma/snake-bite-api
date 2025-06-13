@@ -17,11 +17,13 @@ public class Snake {
     private String species;
     private String color;
     private String pattern;
-    private String region;
     private double averageLength;
-    private boolean venomous;
 
-    private String imageUrl;
+    @Enumerated(EnumType.STRING)
+    private Venomous venomous;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> imageUrl;
 
     @ManyToOne
     @JoinColumn(name = "snake_id")
