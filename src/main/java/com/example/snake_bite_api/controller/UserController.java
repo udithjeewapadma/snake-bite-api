@@ -45,4 +45,17 @@ public class UserController {
     public void deleteUserById(@PathVariable("user-id") Long userId) {
         userService.deleteUserById(userId);
     }
+
+    @PutMapping("/{user-id}")
+    public UserResponseDTO updateUserById(@PathVariable("user-id") Long userId,
+                                          @RequestBody CreateUserRequestDTO createUserRequestDTO) {
+
+        User user = userService.updateUserById(userId, createUserRequestDTO);
+        UserResponseDTO userResponseDTO = new UserResponseDTO();
+        userResponseDTO.setId(user.getId());
+        userResponseDTO.setUserName(user.getUserName());
+        userResponseDTO.setEmail(user.getEmail());
+        userResponseDTO.setPhoneNumber(user.getPhoneNumber());
+        return userResponseDTO;
+    }
 }
