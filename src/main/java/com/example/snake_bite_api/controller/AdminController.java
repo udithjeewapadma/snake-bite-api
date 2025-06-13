@@ -40,4 +40,9 @@ public class AdminController {
     public List<AdminResponseDTO> getAllAdmins() {
         return adminService.findAllAdmins();
     }
+
+    @DeleteMapping("/{admin-id}")
+    public void deleteAdmin(@PathVariable("admin-id") Long adminId) {
+        adminService.deleteAdminById(adminId);
+    }
 }

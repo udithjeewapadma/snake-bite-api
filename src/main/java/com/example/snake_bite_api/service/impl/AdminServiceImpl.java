@@ -51,4 +51,9 @@ public class AdminServiceImpl implements AdminService {
             return adminResponseDTO;
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteAdminById(Long id) {
+        adminRepository.deleteById(id);
+    }
 }

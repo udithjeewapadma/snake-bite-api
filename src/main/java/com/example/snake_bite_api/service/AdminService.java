@@ -14,4 +14,6 @@ public interface AdminService {
 
     List<AdminResponseDTO> findAllAdmins();
 
+    void deleteAdminById(Long id);
+
 }
