@@ -40,4 +40,9 @@ public class UserController {
     public List<UserResponseDTO> getAllUsers() {
         return userService.findAllUsers();
     }
+
+    @DeleteMapping("/{user-id}")
+    public void deleteUserById(@PathVariable("user-id") Long userId) {
+        userService.deleteUserById(userId);
+    }
 }
