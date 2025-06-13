@@ -9,6 +9,9 @@ import com.example.snake_bite_api.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -34,5 +37,18 @@ public class AdminServiceImpl implements AdminService {
         adminResponseDTO.setEmail(admin.getEmail());
         adminResponseDTO.setPhoneNumber(admin.getPhoneNumber());
         return adminResponseDTO;
+    }
+
+    @Override
+    public List<AdminResponseDTO> findAllAdmins() {
+        List<Admin> admins = adminRepository.findAll();
+        return admins.stream().map(admin -> {
+            AdminResponseDTO adminResponseDTO = new AdminResponseDTO();
+            adminResponseDTO.setId(admin.getId());
+            adminResponseDTO.setAdminName(admin.getAdminName());
+            adminResponseDTO.setEmail(admin.getEmail());
+            adminResponseDTO.setPhoneNumber(admin.getPhoneNumber());
+            return adminResponseDTO;
+        }).collect(Collectors.toList());
     }
 }

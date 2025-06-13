@@ -28,4 +28,9 @@ public class AdminController {
 
         return adminResponseDTO;
     }
+
+    @GetMapping("/{admin-id}")
+    public AdminResponseDTO getAdmin(@PathVariable("admin-id") Long adminId) {
+        return adminService.findAdminById(adminId);
+    }
 }
