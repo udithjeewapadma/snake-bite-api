@@ -14,12 +14,12 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String adminName;
-    private int phoneNumber;
+    private String phoneNumber;
     private String email;
 
     @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Snake> snakes;
 
-    @OneToMany
+    @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<RequestNewSnake> requestNewSnakes;
 }
