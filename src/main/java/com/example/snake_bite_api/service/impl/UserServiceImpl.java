@@ -54,4 +54,11 @@ public class UserServiceImpl implements UserService {
             return userResponseDTO;
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteUserById(Long id) {
+         userRepository.deleteById(id);
+    }
+
+
 }
