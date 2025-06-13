@@ -28,4 +28,9 @@ public class UserController {
         userResponseDTO.setPhoneNumber(user.getPhoneNumber());
         return userResponseDTO;
     }
+
+    @GetMapping("/{user-id}")
+    public UserResponseDTO getUserById(@PathVariable("user-id") Long userId) {
+        return userService.findUserById(userId);
+    }
 }
