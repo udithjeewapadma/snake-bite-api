@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admins")
 public class AdminController {
@@ -32,5 +34,10 @@ public class AdminController {
     @GetMapping("/{admin-id}")
     public AdminResponseDTO getAdmin(@PathVariable("admin-id") Long adminId) {
         return adminService.findAdminById(adminId);
+    }
+
+    @GetMapping
+    public List<AdminResponseDTO> getAllAdmins() {
+        return adminService.findAllAdmins();
     }
 }
