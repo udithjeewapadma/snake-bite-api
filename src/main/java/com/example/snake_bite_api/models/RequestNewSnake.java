@@ -13,6 +13,9 @@ public class RequestNewSnake {
     private String name;
     private String description;
 
+    @Enumerated(EnumType.STRING)
+    private SnakeRequestStatus status;
+
     @ManyToOne
     @JoinTable(name = "user_id")
     private User user;
