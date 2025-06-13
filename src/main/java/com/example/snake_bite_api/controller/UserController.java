@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -32,5 +34,10 @@ public class UserController {
     @GetMapping("/{user-id}")
     public UserResponseDTO getUserById(@PathVariable("user-id") Long userId) {
         return userService.findUserById(userId);
+    }
+
+    @GetMapping
+    public List<UserResponseDTO> getAllUsers() {
+        return userService.findAllUsers();
     }
 }
