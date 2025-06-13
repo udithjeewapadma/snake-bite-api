@@ -60,5 +60,16 @@ public class UserServiceImpl implements UserService {
          userRepository.deleteById(id);
     }
 
+    @Override
+    public User updateUserById(Long id, CreateUserRequestDTO createUserRequestDTO) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        existingUser.setUserName(createUserRequestDTO.getUserName());
+        existingUser.setEmail(createUserRequestDTO.getEmail());
+        existingUser.setPhoneNumber(createUserRequestDTO.getPhoneNumber());
+        return userRepository.save(existingUser);
+    }
+
 
 }
