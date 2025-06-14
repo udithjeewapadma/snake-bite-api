@@ -20,5 +20,4 @@ public class SnakeResponseDTO {
     private List<String> imageUrls;
 
     private Long adminId;
-    private Long userId;
 }
