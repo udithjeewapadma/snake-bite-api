@@ -67,9 +67,11 @@ public class SnakeServiceImpl implements SnakeService {
         snakeResponseDTO.setId(savedSnake.getId());
         snakeResponseDTO.setName(savedSnake.getName());
         snakeResponseDTO.setColor(savedSnake.getColor());
+        snakeResponseDTO.setSpecies(savedSnake.getSpecies());
         snakeResponseDTO.setPattern(savedSnake.getPattern());
         snakeResponseDTO.setAverageLength(savedSnake.getAverageLength());
         snakeResponseDTO.setVenomous(savedSnake.getVenomous());
+        snakeResponseDTO.setImageUrls(savedSnake.getImageUrl());
         snakeResponseDTO.setAdminId(savedSnake.getAdmin().getId());
         return snakeResponseDTO;
 
