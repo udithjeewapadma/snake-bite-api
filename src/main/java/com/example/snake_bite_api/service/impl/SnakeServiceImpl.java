@@ -4,6 +4,7 @@ import com.cloudinary.Cloudinary;
 import com.example.snake_bite_api.controller.dto.request.CreateSnakeRequestDTO;
 import com.example.snake_bite_api.controller.dto.response.SnakeResponseDTO;
 import com.example.snake_bite_api.exception.AdminNotFoundException;
+import com.example.snake_bite_api.exception.SnakeNotFoundException;
 import com.example.snake_bite_api.models.Admin;
 import com.example.snake_bite_api.models.Snake;
 import com.example.snake_bite_api.models.Venomous;
@@ -75,6 +76,24 @@ public class SnakeServiceImpl implements SnakeService {
         snakeResponseDTO.setAdminId(savedSnake.getAdmin().getId());
         return snakeResponseDTO;
 
+    }
+
+    @Override
+    public SnakeResponseDTO findSnakeById(Long id) throws SnakeNotFoundException {
+
+        Snake snake = snakeRepository.findById(id)
+                .orElseThrow(() -> new SnakeNotFoundException("Snake not found"));
+        SnakeResponseDTO snakeResponseDTO = new SnakeResponseDTO();
+        snakeResponseDTO.setId(snake.getId());
+        snakeResponseDTO.setName(snake.getName());
+        snakeResponseDTO.setColor(snake.getColor());
+        snakeResponseDTO.setSpecies(snake.getSpecies());
+        snakeResponseDTO.setPattern(snake.getPattern());
+        snakeResponseDTO.setAverageLength(snake.getAverageLength());
+        snakeResponseDTO.setVenomous(snake.getVenomous());
+        snakeResponseDTO.setImageUrls(snake.getImageUrl());
+        snakeResponseDTO.setAdminId(snake.getAdmin().getId());
+        return snakeResponseDTO;
     }
 
 
