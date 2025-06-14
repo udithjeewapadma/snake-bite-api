@@ -40,7 +40,7 @@ public class SnakeServiceImpl implements SnakeService {
             throws IOException, AdminNotFoundException {
 
         Admin admin = adminRepository.findById(adminId)
-                .orElseThrow(() -> new AdminNotFoundException("Admin not found"));
+                .orElseThrow(() -> new AdminNotFoundException("Admin with ID " + adminId + " not found."));
 
         Snake snake = new Snake();
         snake.setName(createSnakeRequestDTO.getName());
@@ -83,7 +83,7 @@ public class SnakeServiceImpl implements SnakeService {
     public SnakeResponseDTO findSnakeById(Long id) throws SnakeNotFoundException {
 
         Snake snake = snakeRepository.findById(id)
-                .orElseThrow(() -> new SnakeNotFoundException("Snake not found"));
+                .orElseThrow(() -> new SnakeNotFoundException("Snake with ID " + id + " not found."));
         SnakeResponseDTO snakeResponseDTO = new SnakeResponseDTO();
         snakeResponseDTO.setId(snake.getId());
         snakeResponseDTO.setName(snake.getName());
@@ -123,6 +123,47 @@ public class SnakeServiceImpl implements SnakeService {
         snakeRepository.deleteById(id);
     }
 
+    @Override
+    public SnakeResponseDTO updateSnakeById(Long id, CreateSnakeRequestDTO createSnakeRequestDTO)
+            throws SnakeNotFoundException, IOException {
 
+        Snake existingSnake = snakeRepository.findById(id)
+                .orElseThrow(() -> new SnakeNotFoundException("Snake with ID " + id + " not found."));
+
+        existingSnake.setName(createSnakeRequestDTO.getName());
+        existingSnake.setColor(createSnakeRequestDTO.getColor());
+        existingSnake.setSpecies(createSnakeRequestDTO.getSpecies());
+        existingSnake.setPattern(createSnakeRequestDTO.getPattern());
+        existingSnake.setAverageLength(createSnakeRequestDTO.getAverageLength());
+        existingSnake.setVenomous(createSnakeRequestDTO.getVenomous());
+
+        if (createSnakeRequestDTO.getImageFiles() != null && !createSnakeRequestDTO.getImageFiles().isEmpty()) {
+            List<String> imageUrls = new ArrayList<>();
+            for (MultipartFile file : createSnakeRequestDTO.getImageFiles()) {
+                String imageUrl = cloudinary.uploader()
+                        .upload(file.getBytes(),
+                                Map.of("public_id", UUID.randomUUID().toString()))
+                        .get("url")
+                        .toString();
+                imageUrls.add(imageUrl);
+            }
+            existingSnake.setImageUrl(imageUrls);
+        }
+
+        Snake updatedSnake = snakeRepository.save(existingSnake);
+
+        SnakeResponseDTO snakeResponseDTO = new SnakeResponseDTO();
+        snakeResponseDTO.setId(updatedSnake.getId());
+        snakeResponseDTO.setName(updatedSnake.getName());
+        snakeResponseDTO.setColor(updatedSnake.getColor());
+        snakeResponseDTO.setSpecies(updatedSnake.getSpecies());
+        snakeResponseDTO.setPattern(updatedSnake.getPattern());
+        snakeResponseDTO.setAverageLength(updatedSnake.getAverageLength());
+        snakeResponseDTO.setVenomous(updatedSnake.getVenomous());
+        snakeResponseDTO.setImageUrls(updatedSnake.getImageUrl());
+        snakeResponseDTO.setAdminId(updatedSnake.getAdmin().getId());
+
+        return snakeResponseDTO;
+    }
 
 }

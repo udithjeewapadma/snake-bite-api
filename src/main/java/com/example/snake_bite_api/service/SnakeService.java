@@ -20,4 +20,7 @@ public interface SnakeService {
     List<SnakeResponseDTO> findAllSnake();
 
     void deleteSnakeById(Long id) throws SnakeNotFoundException;
+
+    SnakeResponseDTO updateSnakeById(Long id,CreateSnakeRequestDTO createSnakeRequestDTO)
+            throws SnakeNotFoundException, IOException;
 }
