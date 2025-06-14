@@ -7,6 +7,7 @@ import com.example.snake_bite_api.exception.SnakeNotFoundException;
 import com.example.snake_bite_api.models.Snake;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface SnakeService {
 
@@ -15,4 +16,6 @@ public interface SnakeService {
 
 
     SnakeResponseDTO findSnakeById(Long id) throws SnakeNotFoundException;
+
+    List<SnakeResponseDTO> findAllSnake();
 }

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class SnakeServiceImpl implements SnakeService {
@@ -94,6 +95,24 @@ public class SnakeServiceImpl implements SnakeService {
         snakeResponseDTO.setImageUrls(snake.getImageUrl());
         snakeResponseDTO.setAdminId(snake.getAdmin().getId());
         return snakeResponseDTO;
+    }
+
+    @Override
+    public List<SnakeResponseDTO> findAllSnake() {
+        List<Snake> snakes = snakeRepository.findAll();
+        return snakes.stream().map(snake -> {
+            SnakeResponseDTO snakeResponseDTO = new SnakeResponseDTO();
+            snakeResponseDTO.setId(snake.getId());
+            snakeResponseDTO.setName(snake.getName());
+            snakeResponseDTO.setColor(snake.getColor());
+            snakeResponseDTO.setSpecies(snake.getSpecies());
+            snakeResponseDTO.setPattern(snake.getPattern());
+            snakeResponseDTO.setAverageLength(snake.getAverageLength());
+            snakeResponseDTO.setVenomous(snake.getVenomous());
+            snakeResponseDTO.setImageUrls(snake.getImageUrl());
+            snakeResponseDTO.setAdminId(snake.getAdmin().getId());
+            return snakeResponseDTO;
+        }).collect(Collectors.toList());
     }
 
 
