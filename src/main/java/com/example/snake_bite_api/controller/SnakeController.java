@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/snakes")
@@ -28,5 +29,10 @@ public class SnakeController {
     @GetMapping("/{snake-id}")
     private SnakeResponseDTO getSnakeById(@PathVariable("snake-id") Long snakeId){
         return snakeService.findSnakeById(snakeId);
+    }
+
+    @GetMapping
+    private List<SnakeResponseDTO> findAllSnake(){
+        return snakeService.findAllSnake();
     }
 }
