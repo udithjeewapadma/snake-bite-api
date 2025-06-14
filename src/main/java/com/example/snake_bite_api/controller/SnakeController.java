@@ -24,4 +24,9 @@ public class SnakeController {
         return snakeService.createSnake(adminId, createSnakeRequestDTO);
 
     }
+
+    @GetMapping("/{snake-id}")
+    private SnakeResponseDTO getSnakeById(@PathVariable("snake-id") Long snakeId){
+        return snakeService.findSnakeById(snakeId);
+    }
 }
