@@ -30,7 +30,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public AdminResponseDTO findAdminById(Long id) {
         Admin admin = adminRepository.findById(id)
-                .orElseThrow(() -> new AdminNotFoundException("Admin not found"));
+                .orElseThrow(() -> new AdminNotFoundException("Admin with ID " + id + " not found."));
         AdminResponseDTO adminResponseDTO = new AdminResponseDTO();
         adminResponseDTO.setId(admin.getId());
         adminResponseDTO.setAdminName(admin.getAdminName());
@@ -53,7 +53,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteAdminById(Long id) {
+    public void deleteAdminById(Long id) throws AdminNotFoundException {
+        if (!adminRepository.existsById(id)) {
+            throw new AdminNotFoundException("Admin with ID " + id + " not found.");
+        }
         adminRepository.deleteById(id);
     }
 
@@ -61,7 +64,7 @@ public class AdminServiceImpl implements AdminService {
     public Admin updateAdminById(Long id, CreateAdminRequestDTO createAdminRequestDTO) {
 
         Admin existingAdmin = adminRepository.findById(id)
-                .orElseThrow(() -> new AdminNotFoundException("Admin not found"));
+                .orElseThrow(() -> new AdminNotFoundException("Admin with ID " + id + " not found."));
         existingAdmin.setAdminName(createAdminRequestDTO.getAdminName());
         existingAdmin.setEmail(createAdminRequestDTO.getEmail());
         existingAdmin.setPhoneNumber(createAdminRequestDTO.getPhoneNumber());

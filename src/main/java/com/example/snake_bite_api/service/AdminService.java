@@ -15,7 +15,7 @@ public interface AdminService {
 
     List<AdminResponseDTO> findAllAdmins();
 
-    void deleteAdminById(Long id);
+    void deleteAdminById(Long id) throws AdminNotFoundException;
 
     Admin updateAdminById(Long id, CreateAdminRequestDTO createAdminRequestDTO) throws AdminNotFoundException;
 
