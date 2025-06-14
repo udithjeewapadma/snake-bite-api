@@ -40,4 +40,10 @@ public class SnakeController {
     private void deleteSnakeById(@PathVariable("snake-id") Long snakeId){
         snakeService.deleteSnakeById(snakeId);
     }
+
+    @PutMapping("/{snake-id}")
+    public SnakeResponseDTO updateSnakeById(@PathVariable("snake-id") Long id,
+                                    @ModelAttribute CreateSnakeRequestDTO createSnakeRequestDTO) throws IOException {
+        return snakeService.updateSnakeById(id, createSnakeRequestDTO);
+    }
 }
