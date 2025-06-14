@@ -115,5 +115,14 @@ public class SnakeServiceImpl implements SnakeService {
         }).collect(Collectors.toList());
     }
 
+    @Override
+    public void deleteSnakeById(Long id) throws SnakeNotFoundException {
+        if (!snakeRepository.existsById(id)) {
+            throw new SnakeNotFoundException("Snake with ID " + id + " not found.");
+        }
+        snakeRepository.deleteById(id);
+    }
+
+
 
 }

@@ -35,4 +35,9 @@ public class SnakeController {
     private List<SnakeResponseDTO> findAllSnake(){
         return snakeService.findAllSnake();
     }
+
+    @DeleteMapping("/{snake-id}")
+    private void deleteSnakeById(@PathVariable("snake-id") Long snakeId){
+        snakeService.deleteSnakeById(snakeId);
+    }
 }
