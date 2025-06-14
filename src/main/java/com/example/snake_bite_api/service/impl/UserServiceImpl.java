@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO findUserById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User with ID " + id + " not found."));
         UserResponseDTO userResponseDTO = new UserResponseDTO();
         userResponseDTO.setId(user.getId());
         userResponseDTO.setUserName(user.getUserName());
@@ -56,14 +56,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(Long id) {
+    public void deleteUserById(Long id) throws UserNotFoundException {
+        if(!userRepository.existsById(id)){
+            throw new UserNotFoundException("User with ID " + id + " not found.");
+        }
          userRepository.deleteById(id);
     }
 
     @Override
     public User updateUserById(Long id, CreateUserRequestDTO createUserRequestDTO) {
         User existingUser = userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User with ID" + id + "not found."));
 
         existingUser.setUserName(createUserRequestDTO.getUserName());
         existingUser.setEmail(createUserRequestDTO.getEmail());
