@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -78,5 +79,19 @@ public class BlogServiceImpl implements BlogService {
         blogResponseDTO.setImageUrls(blog.getImageUrl());
         blogResponseDTO.setUserId(blog.getUser().getId());
         return blogResponseDTO;
+    }
+
+    @Override
+    public List<BlogResponseDTO> findAllBlogs() {
+        List<Blog> blogs = blogRepository.findAll();
+        return blogs.stream().map(blog -> {
+            BlogResponseDTO blogResponseDTO = new BlogResponseDTO();
+            blogResponseDTO.setId(blog.getId());
+            blogResponseDTO.setTitle(blog.getTitle());
+            blogResponseDTO.setContent(blog.getContent());
+            blogResponseDTO.setImageUrls(blog.getImageUrl());
+            blogResponseDTO.setUserId(blog.getUser().getId());
+            return blogResponseDTO;
+        }).collect(Collectors.toList());
     }
 }

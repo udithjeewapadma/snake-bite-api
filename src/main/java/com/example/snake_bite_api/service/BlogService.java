@@ -7,6 +7,7 @@ import com.example.snake_bite_api.exception.UserNotFoundException;
 import com.example.snake_bite_api.models.Blog;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface BlogService {
 
@@ -14,4 +15,6 @@ public interface BlogService {
             throws UserNotFoundException, IOException;
 
     BlogResponseDTO findBlogById(Long id) throws BlogNotFoundException;
+
+    List<BlogResponseDTO> findAllBlogs();
 }
