@@ -15,6 +15,9 @@ public class Blog {
     private String title;
     private String content;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> imageUrl;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

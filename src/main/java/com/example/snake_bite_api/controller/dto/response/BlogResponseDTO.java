@@ -12,4 +12,6 @@ public class BlogResponseDTO {
     private String title;
     private String content;
     private List<String> imageUrls;
+
+    private Long userId;
 }
