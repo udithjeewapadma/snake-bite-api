@@ -38,4 +38,12 @@ public class BlogController {
     public void deleteBlog(@PathVariable("blog-id") Long blogId) throws BlogNotFoundException {
         blogService.deleteBlogById(blogId);
     }
+
+    @PutMapping("/{blog-id}")
+    public BlogResponseDTO updateBlog(@PathVariable("blog-id") Long id,
+                                      @ModelAttribute CreateBlogRequestDTO createBlogRequestDTO)
+    throws BlogNotFoundException, IOException {
+
+        return blogService.updateBlogById(id,createBlogRequestDTO);
+    }
 }
