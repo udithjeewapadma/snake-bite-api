@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/blogs")
@@ -26,5 +27,10 @@ public class BlogController {
     @GetMapping("/{blog-id}")
     public BlogResponseDTO findBlogById(@PathVariable("blog-id") Long blogId) throws BlogNotFoundException {
         return blogService.findBlogById(blogId);
+    }
+
+    @GetMapping
+    public List<BlogResponseDTO> findAllBlogs() {
+        return blogService.findAllBlogs();
     }
 }
