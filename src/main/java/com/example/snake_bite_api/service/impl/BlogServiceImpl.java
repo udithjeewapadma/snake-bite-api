@@ -1,6 +1,7 @@
 package com.example.snake_bite_api.service.impl;
 
 import com.cloudinary.Cloudinary;
+import com.example.snake_bite_api.controller.BlogController;
 import com.example.snake_bite_api.controller.dto.request.CreateBlogRequestDTO;
 import com.example.snake_bite_api.controller.dto.response.BlogResponseDTO;
 import com.example.snake_bite_api.exception.BlogNotFoundException;
@@ -101,5 +102,39 @@ public class BlogServiceImpl implements BlogService {
             throw new BlogNotFoundException("Blog with id " + id + " not found");
         }
         blogRepository.deleteById(id);
+    }
+
+    @Override
+    public BlogResponseDTO updateBlogById(Long id, CreateBlogRequestDTO createBlogRequestDTO) throws BlogNotFoundException,IOException {
+
+        Blog existingBlog = blogRepository.findById(id)
+                .orElseThrow(() -> new BlogNotFoundException("Blog with id " + id + " not found"));
+
+        existingBlog.setTitle(createBlogRequestDTO.getTitle());
+        existingBlog.setContent(createBlogRequestDTO.getContent());
+
+        if (createBlogRequestDTO.getImageFiles() != null && !createBlogRequestDTO.getImageFiles().isEmpty()) {
+            List<String> imageUrls = new ArrayList<>();
+            for (MultipartFile file : createBlogRequestDTO.getImageFiles()) {
+                String imageUrl = cloudinary.uploader()
+                        .upload(file.getBytes(),
+                                Map.of("public_id", UUID.randomUUID().toString()))
+                        .get("url")
+                        .toString();
+                imageUrls.add(imageUrl);
+            }
+            existingBlog.setImageUrl(imageUrls);
+        }
+
+        Blog savedBlog = blogRepository.save(existingBlog);
+
+        BlogResponseDTO blogResponseDTO = new BlogResponseDTO();
+
+        blogResponseDTO.setId(savedBlog.getId());
+        blogResponseDTO.setTitle(savedBlog.getTitle());
+        blogResponseDTO.setContent(savedBlog.getContent());
+        blogResponseDTO.setImageUrls(savedBlog.getImageUrl());
+        blogResponseDTO.setUserId(savedBlog.getUser().getId());
+        return blogResponseDTO;
     }
 }

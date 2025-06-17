@@ -19,4 +19,7 @@ public interface BlogService {
     List<BlogResponseDTO> findAllBlogs();
 
     void deleteBlogById(Long id) throws BlogNotFoundException;
+
+    BlogResponseDTO updateBlogById(Long id, CreateBlogRequestDTO createBlogRequestDTO)
+            throws BlogNotFoundException, IOException;
 }
