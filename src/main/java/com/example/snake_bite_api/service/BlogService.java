@@ -17,4 +17,6 @@ public interface BlogService {
     BlogResponseDTO findBlogById(Long id) throws BlogNotFoundException;
 
     List<BlogResponseDTO> findAllBlogs();
+
+    void deleteBlogById(Long id) throws BlogNotFoundException;
 }

@@ -33,4 +33,9 @@ public class BlogController {
     public List<BlogResponseDTO> findAllBlogs() {
         return blogService.findAllBlogs();
     }
+
+    @DeleteMapping("/{blog-id}")
+    public void deleteBlog(@PathVariable("blog-id") Long blogId) throws BlogNotFoundException {
+        blogService.deleteBlogById(blogId);
+    }
 }

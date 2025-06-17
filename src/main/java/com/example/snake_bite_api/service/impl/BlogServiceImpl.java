@@ -94,4 +94,12 @@ public class BlogServiceImpl implements BlogService {
             return blogResponseDTO;
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteBlogById(Long id) throws BlogNotFoundException {
+        if (!blogRepository.existsById(id)) {
+            throw new BlogNotFoundException("Blog with id " + id + " not found");
+        }
+        blogRepository.deleteById(id);
+    }
 }
