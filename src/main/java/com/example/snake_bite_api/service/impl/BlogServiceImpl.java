@@ -3,6 +3,7 @@ package com.example.snake_bite_api.service.impl;
 import com.cloudinary.Cloudinary;
 import com.example.snake_bite_api.controller.dto.request.CreateBlogRequestDTO;
 import com.example.snake_bite_api.controller.dto.response.BlogResponseDTO;
+import com.example.snake_bite_api.exception.BlogNotFoundException;
 import com.example.snake_bite_api.exception.UserNotFoundException;
 import com.example.snake_bite_api.models.Blog;
 import com.example.snake_bite_api.models.User;
@@ -63,5 +64,19 @@ public class BlogServiceImpl implements BlogService {
         return blogResponseDTO;
 
 
+    }
+
+    @Override
+    public BlogResponseDTO findBlogById(Long id) throws BlogNotFoundException {
+
+        Blog blog = blogRepository.findById(id)
+                .orElseThrow(() -> new BlogNotFoundException("Blog with id " + id + " not found"));
+        BlogResponseDTO blogResponseDTO = new BlogResponseDTO();
+        blogResponseDTO.setId(blog.getId());
+        blogResponseDTO.setTitle(blog.getTitle());
+        blogResponseDTO.setContent(blog.getContent());
+        blogResponseDTO.setImageUrls(blog.getImageUrl());
+        blogResponseDTO.setUserId(blog.getUser().getId());
+        return blogResponseDTO;
     }
 }
