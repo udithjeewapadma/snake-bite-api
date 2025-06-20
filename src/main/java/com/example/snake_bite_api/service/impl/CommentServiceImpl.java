@@ -1,6 +1,8 @@
 package com.example.snake_bite_api.service.impl;
 
 import com.example.snake_bite_api.controller.dto.request.CreateCommentRequestDTO;
+import com.example.snake_bite_api.controller.dto.response.CommentResponseDTO;
+import com.example.snake_bite_api.exception.CommentNotFoundException;
 import com.example.snake_bite_api.exception.UserNotFoundException;
 import com.example.snake_bite_api.models.Comment;
 import com.example.snake_bite_api.models.User;
@@ -28,6 +30,19 @@ public class CommentServiceImpl implements CommentService {
         comment.setComment(createCommentRequestDTO.getComment());
         comment.setUser(user);
         return commentRepository.save(comment);
+
+    }
+
+    @Override
+    public CommentResponseDTO findCommentById(Long id) {
+
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new CommentNotFoundException("Comment with id " + id + " not found"));
+        CommentResponseDTO commentResponseDTO = new CommentResponseDTO();
+        commentResponseDTO.setId(comment.getId());
+        commentResponseDTO.setComment(comment.getComment());
+        commentResponseDTO.setUserId(comment.getUser().getId());
+        return commentResponseDTO;
 
     }
 }
