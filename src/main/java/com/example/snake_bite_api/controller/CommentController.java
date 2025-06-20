@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/comments")
 @AllArgsConstructor
@@ -29,5 +31,10 @@ public class CommentController {
     @GetMapping("/{comment-id}")
     public CommentResponseDTO findCommentById(@PathVariable("comment-id") Long commentId) {
         return commentService.findCommentById(commentId);
+    }
+
+    @GetMapping
+    public List<CommentResponseDTO> findAllComments() {
+        return commentService.findAllComments();
     }
 }
