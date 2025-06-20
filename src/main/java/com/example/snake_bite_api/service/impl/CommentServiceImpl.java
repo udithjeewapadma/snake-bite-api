@@ -26,7 +26,8 @@ public class CommentServiceImpl implements CommentService {
     private CommentRepository commentRepository;
 
     @Override
-    public Comment createComment(Long userId, CreateCommentRequestDTO createCommentRequestDTO) {
+    public Comment createComment(Long userId, CreateCommentRequestDTO createCommentRequestDTO)
+                    throws UserNotFoundException{
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
@@ -38,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentResponseDTO findCommentById(Long id) {
+    public CommentResponseDTO findCommentById(Long id) throws CommentNotFoundException {
 
         Comment comment = commentRepository.findById(id)
                 .orElseThrow(() -> new CommentNotFoundException("Comment with id " + id + " not found"));
@@ -60,5 +61,13 @@ public class CommentServiceImpl implements CommentService {
             commentResponseDTO.setUserId(comment.getUser().getId());
             return commentResponseDTO;
         }).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteCommentById(Long id) throws CommentNotFoundException {
+        if (!commentRepository.existsById(id)) {
+            throw new CommentNotFoundException("Comment with id " + id + " not found");
+        }
+        commentRepository.deleteById(id);
     }
 }
