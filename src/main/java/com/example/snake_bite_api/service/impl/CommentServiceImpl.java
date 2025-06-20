@@ -12,6 +12,9 @@ import com.example.snake_bite_api.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -45,4 +48,19 @@ public class CommentServiceImpl implements CommentService {
         return commentResponseDTO;
 
     }
+
+    @Override
+    public List<CommentResponseDTO> findAllComments() {
+        List<Comment> comments = commentRepository.findAll();
+        List<CommentResponseDTO> commentResponseDTOS = new ArrayList<>();
+
+        for (Comment comment : comments) {
+            CommentResponseDTO commentResponseDTO = new CommentResponseDTO();
+            commentResponseDTO.setId(comment.getId());
+            commentResponseDTO.setComment(comment.getComment());
+            commentResponseDTO.setUserId(comment.getUser().getId());
+        }
+        return commentResponseDTOS;
+    }
+
 }
