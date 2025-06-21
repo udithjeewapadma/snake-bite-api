@@ -17,4 +17,6 @@ public interface CommentService {
     List<CommentResponseDTO> findAllComments();
 
     void deleteCommentById(Long id) throws CommentNotFoundException;
+
+    Comment updateCommentById(Long id, CreateCommentRequestDTO createCommentRequestDTO);
 }
