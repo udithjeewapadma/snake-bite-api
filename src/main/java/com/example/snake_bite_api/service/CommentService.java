@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CommentService {
 
-    Comment createComment(Long userId,CreateCommentRequestDTO createCommentRequestDTO) throws UserNotFoundException;
+    Comment createComment(Long userId,Long blogId,CreateCommentRequestDTO createCommentRequestDTO) throws UserNotFoundException;
 
     CommentResponseDTO findCommentById(Long id) throws CommentNotFoundException;
 

@@ -10,4 +10,5 @@ public class CommentResponseDTO {
     private Long id;
     private String comment;
     private long userId;
+    private long blogId;
 }

@@ -2,10 +2,13 @@ package com.example.snake_bite_api.service.impl;
 
 import com.example.snake_bite_api.controller.dto.request.CreateCommentRequestDTO;
 import com.example.snake_bite_api.controller.dto.response.CommentResponseDTO;
+import com.example.snake_bite_api.exception.BlogNotFoundException;
 import com.example.snake_bite_api.exception.CommentNotFoundException;
 import com.example.snake_bite_api.exception.UserNotFoundException;
+import com.example.snake_bite_api.models.Blog;
 import com.example.snake_bite_api.models.Comment;
 import com.example.snake_bite_api.models.User;
+import com.example.snake_bite_api.repository.BlogRepository;
 import com.example.snake_bite_api.repository.CommentRepository;
 import com.example.snake_bite_api.repository.UserRepository;
 import com.example.snake_bite_api.service.CommentService;
@@ -23,17 +26,25 @@ public class CommentServiceImpl implements CommentService {
     private UserRepository userRepository;
 
     @Autowired
+    private BlogRepository blogRepository;
+
+    @Autowired
     private CommentRepository commentRepository;
 
     @Override
-    public Comment createComment(Long userId, CreateCommentRequestDTO createCommentRequestDTO)
+    public Comment createComment(Long userId, Long blogId, CreateCommentRequestDTO createCommentRequestDTO)
                     throws UserNotFoundException{
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " not found"));
+
+        Blog blog = blogRepository.findById(blogId)
+                .orElseThrow(() -> new BlogNotFoundException("Blog with id " + blogId + " not found"));
+
         Comment comment = new Comment();
         comment.setComment(createCommentRequestDTO.getComment());
         comment.setUser(user);
+        comment.setBlog(blog);
         return commentRepository.save(comment);
 
     }
@@ -47,6 +58,7 @@ public class CommentServiceImpl implements CommentService {
         commentResponseDTO.setId(comment.getId());
         commentResponseDTO.setComment(comment.getComment());
         commentResponseDTO.setUserId(comment.getUser().getId());
+        commentResponseDTO.setBlogId(comment.getBlog().getId());
         return commentResponseDTO;
 
     }
@@ -59,6 +71,7 @@ public class CommentServiceImpl implements CommentService {
             commentResponseDTO.setId(comment.getId());
             commentResponseDTO.setComment(comment.getComment());
             commentResponseDTO.setUserId(comment.getUser().getId());
+            commentResponseDTO.setBlogId(comment.getBlog().getId());
             return commentResponseDTO;
         }).collect(Collectors.toList());
     }

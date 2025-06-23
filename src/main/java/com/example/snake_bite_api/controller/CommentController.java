@@ -19,12 +19,15 @@ public class CommentController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CommentResponseDTO createComment(@RequestParam Long userId, @RequestBody CreateCommentRequestDTO createCommentRequestDTO) {
-        Comment comment = commentService.createComment(userId, createCommentRequestDTO);
+    public CommentResponseDTO createComment(@RequestParam Long userId,
+                                            @RequestParam Long blogId,
+                                            @RequestBody CreateCommentRequestDTO createCommentRequestDTO) {
+        Comment comment = commentService.createComment(userId, blogId, createCommentRequestDTO);
         CommentResponseDTO commentResponseDTO = new CommentResponseDTO();
         commentResponseDTO.setId(comment.getId());
         commentResponseDTO.setComment(comment.getComment());
         commentResponseDTO.setUserId(comment.getUser().getId());
+        commentResponseDTO.setBlogId(comment.getBlog().getId());
         return commentResponseDTO;
     }
 
@@ -44,13 +47,14 @@ public class CommentController {
     }
 
     @PutMapping("/{comment-id}")
-    public CommentResponseDTO updateCommentById(@PathVariable("comment-id")  Long userId,
+    public CommentResponseDTO updateCommentById(@PathVariable("comment-id")  Long commentId,
                                                     @RequestBody CreateCommentRequestDTO createCommentRequestDTO) {
-        Comment comment = commentService.updateCommentById(userId, createCommentRequestDTO);
+        Comment comment = commentService.updateCommentById(commentId, createCommentRequestDTO);
         CommentResponseDTO commentResponseDTO = new CommentResponseDTO();
         commentResponseDTO.setId(comment.getId());
         commentResponseDTO.setComment(comment.getComment());
         commentResponseDTO.setUserId(comment.getUser().getId());
+        commentResponseDTO.setBlogId(comment.getBlog().getId());
         return commentResponseDTO;
     }
 }
