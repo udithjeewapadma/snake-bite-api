@@ -41,4 +41,9 @@ public class ReplyController {
         return replyService.findAllReplies();
     }
 
+    @DeleteMapping("/{reply-id}")
+    public void deleteReply(@PathVariable("reply-id") Long replyId) {
+        replyService.deleteReplyById(replyId);
+    }
+
 }

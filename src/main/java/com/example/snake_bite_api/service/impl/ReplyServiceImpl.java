@@ -71,4 +71,12 @@ public class ReplyServiceImpl implements ReplyService {
             return replyResponseDTO;
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteReplyById(Long id) {
+        if(!replyRepository.existsById(id)) {
+            throw new ReplyNotFoundException("Reply with id " + id + " not found");
+        }
+        replyRepository.deleteById(id);
+    }
 }
