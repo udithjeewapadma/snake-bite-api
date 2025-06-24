@@ -28,4 +28,10 @@ public class ReplyController {
         replyResponseDTO.setUserId(reply.getUser().getId());
         return replyResponseDTO;
     }
+
+    @GetMapping("/{reply-id}")
+    public ReplyResponseDTO getReply(@PathVariable("reply-id") Long replyId) {
+        return replyService.findReplyById(replyId);
+    }
+
 }

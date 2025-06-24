@@ -1,7 +1,9 @@
 package com.example.snake_bite_api.service.impl;
 
 import com.example.snake_bite_api.controller.dto.request.CreateReplyRequestDTO;
+import com.example.snake_bite_api.controller.dto.response.ReplyResponseDTO;
 import com.example.snake_bite_api.exception.CommentNotFoundException;
+import com.example.snake_bite_api.exception.ReplyNotFoundException;
 import com.example.snake_bite_api.exception.UserNotFoundException;
 import com.example.snake_bite_api.models.Comment;
 import com.example.snake_bite_api.models.Reply;
@@ -39,5 +41,18 @@ public class ReplyServiceImpl implements ReplyService {
         reply.setComment(comment);
         reply.setUser(user);
         return replyRepository.save(reply);
+    }
+
+    @Override
+    public ReplyResponseDTO findReplyById(Long id) {
+
+        Reply reply = replyRepository.findById(id)
+                .orElseThrow(() -> new ReplyNotFoundException("Reply with id " + id + " not found"));
+        ReplyResponseDTO replyResponseDTO = new ReplyResponseDTO();
+        replyResponseDTO.setId(reply.getId());
+        replyResponseDTO.setReplyBody(reply.getReplyBody());
+        replyResponseDTO.setCommentId(reply.getComment().getId());
+        replyResponseDTO.setUserId(reply.getUser().getId());
+        return replyResponseDTO;
     }
 }
