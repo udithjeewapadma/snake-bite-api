@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/replies")
 @AllArgsConstructor
@@ -32,6 +34,11 @@ public class ReplyController {
     @GetMapping("/{reply-id}")
     public ReplyResponseDTO getReply(@PathVariable("reply-id") Long replyId) {
         return replyService.findReplyById(replyId);
+    }
+
+    @GetMapping
+    public List<ReplyResponseDTO> getReplies() {
+        return replyService.findAllReplies();
     }
 
 }
