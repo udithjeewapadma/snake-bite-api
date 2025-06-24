@@ -4,9 +4,13 @@ import com.example.snake_bite_api.controller.dto.request.CreateReplyRequestDTO;
 import com.example.snake_bite_api.controller.dto.response.ReplyResponseDTO;
 import com.example.snake_bite_api.models.Reply;
 
+import java.util.List;
+
 public interface ReplyService {
 
     Reply createReply(Long userId, Long commentId,CreateReplyRequestDTO createReplyRequestDTO);
 
     ReplyResponseDTO findReplyById(Long id);
+
+    List<ReplyResponseDTO> findAllReplies();
 }

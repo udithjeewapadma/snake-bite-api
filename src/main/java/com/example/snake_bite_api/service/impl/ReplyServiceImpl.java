@@ -15,6 +15,9 @@ import com.example.snake_bite_api.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ReplyServiceImpl implements ReplyService {
 
@@ -54,5 +57,18 @@ public class ReplyServiceImpl implements ReplyService {
         replyResponseDTO.setCommentId(reply.getComment().getId());
         replyResponseDTO.setUserId(reply.getUser().getId());
         return replyResponseDTO;
+    }
+
+    @Override
+    public List<ReplyResponseDTO> findAllReplies() {
+        List<Reply> replies = replyRepository.findAll();
+        return replies.stream().map(reply -> {
+            ReplyResponseDTO replyResponseDTO = new ReplyResponseDTO();
+            replyResponseDTO.setId(reply.getId());
+            replyResponseDTO.setReplyBody(reply.getReplyBody());
+            replyResponseDTO.setCommentId(reply.getComment().getId());
+            replyResponseDTO.setUserId(reply.getUser().getId());
+            return replyResponseDTO;
+        }).collect(Collectors.toList());
     }
 }
