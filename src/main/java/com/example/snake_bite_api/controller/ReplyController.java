@@ -2,6 +2,7 @@ package com.example.snake_bite_api.controller;
 
 import com.example.snake_bite_api.controller.dto.request.CreateReplyRequestDTO;
 import com.example.snake_bite_api.controller.dto.response.ReplyResponseDTO;
+import com.example.snake_bite_api.exception.ReplyNotFoundException;
 import com.example.snake_bite_api.models.Reply;
 import com.example.snake_bite_api.service.ReplyService;
 import lombok.AllArgsConstructor;
@@ -44,6 +45,18 @@ public class ReplyController {
     @DeleteMapping("/{reply-id}")
     public void deleteReply(@PathVariable("reply-id") Long replyId) {
         replyService.deleteReplyById(replyId);
+    }
+
+    @PutMapping("/{reply-id}")
+    public ReplyResponseDTO updateReply(@PathVariable("reply-id") Long replyId, CreateReplyRequestDTO createReplyRequestDTO){
+
+        Reply reply = replyService.updateReplyById(replyId, createReplyRequestDTO);
+        ReplyResponseDTO replyResponseDTO = new ReplyResponseDTO();
+        replyResponseDTO.setId(reply.getId());
+        replyResponseDTO.setReplyBody(reply.getReplyBody());
+        replyResponseDTO.setCommentId(reply.getUser().getId());
+        replyResponseDTO.setUserId(reply.getUser().getId());
+        return replyResponseDTO;
     }
 
 }
