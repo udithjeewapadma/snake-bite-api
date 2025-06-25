@@ -31,7 +31,8 @@ public class ReplyServiceImpl implements ReplyService {
     private ReplyRepository replyRepository;
 
     @Override
-    public Reply createReply(Long userId, Long commentId, CreateReplyRequestDTO createReplyRequestDTO) {
+    public Reply createReply(Long userId, Long commentId, CreateReplyRequestDTO createReplyRequestDTO)
+                    throws UserNotFoundException, CommentNotFoundException {
 
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException("Comment with id " + commentId + " not found"));
@@ -47,7 +48,7 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public ReplyResponseDTO findReplyById(Long id) {
+    public ReplyResponseDTO findReplyById(Long id) throws ReplyNotFoundException {
 
         Reply reply = replyRepository.findById(id)
                 .orElseThrow(() -> new ReplyNotFoundException("Reply with id " + id + " not found"));
@@ -73,10 +74,20 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    public void deleteReplyById(Long id) {
+    public void deleteReplyById(Long id) throws ReplyNotFoundException {
         if(!replyRepository.existsById(id)) {
             throw new ReplyNotFoundException("Reply with id " + id + " not found");
         }
         replyRepository.deleteById(id);
+    }
+
+    @Override
+    public Reply updateReplyById(Long id, CreateReplyRequestDTO createReplyRequestDTO) throws ReplyNotFoundException {
+
+        Reply existingReply = replyRepository.findById(id)
+                .orElseThrow(() -> new ReplyNotFoundException("Reply with id " + id + " not found"));
+        existingReply.setReplyBody(createReplyRequestDTO.getReplyBody());
+
+        return replyRepository.save(existingReply);
     }
 }
