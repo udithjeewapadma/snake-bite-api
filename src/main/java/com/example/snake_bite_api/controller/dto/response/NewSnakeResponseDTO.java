@@ -23,5 +23,4 @@ public class NewSnakeResponseDTO {
     private SnakeRequestStatus status;
 
     private Long userId;
-    private Long adminId;
 }
