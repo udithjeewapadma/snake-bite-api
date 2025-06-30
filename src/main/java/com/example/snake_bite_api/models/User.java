@@ -19,7 +19,7 @@ public class User {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-    private List<RequestNewSnake> requestNewSnakes;
+    private List<RequestedNewSnake> requestedNewSnakes;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Blog> blogs;
