@@ -1,10 +1,13 @@
 package com.example.snake_bite_api.controller;
 
 import com.example.snake_bite_api.controller.dto.request.CreateAdminRequestDTO;
+import com.example.snake_bite_api.controller.dto.response.AdminInteractionRequestedSnakeResponseDTO;
 import com.example.snake_bite_api.controller.dto.response.AdminResponseDTO;
 import com.example.snake_bite_api.models.Admin;
 import com.example.snake_bite_api.service.AdminService;
+import com.example.snake_bite_api.service.RequestedNewSnakeService;
 import jakarta.validation.Valid;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -56,5 +59,12 @@ public class AdminController {
         adminResponseDTO.setEmail(admin.getEmail());
         adminResponseDTO.setPhoneNumber(admin.getPhoneNumber());
         return adminResponseDTO;
+    }
+
+
+    @PostMapping("/approve")
+    private AdminInteractionRequestedSnakeResponseDTO approveRequest(@RequestParam Long adminId,
+                                                                     @RequestParam Long requestSnakeId) {
+        return adminService.approveRequest(adminId, requestSnakeId);
     }
 }

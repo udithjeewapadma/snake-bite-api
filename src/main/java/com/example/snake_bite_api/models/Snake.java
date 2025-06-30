@@ -26,7 +26,7 @@ public class Snake {
     private List<String> imageUrl;
 
     @ManyToOne
-    @JoinColumn(name = "snake_id")
+    @JoinColumn(name = "admin_id")
     private Admin admin;
 
     @ManyToMany(mappedBy = "snakes")

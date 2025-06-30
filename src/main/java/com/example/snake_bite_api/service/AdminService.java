@@ -1,6 +1,7 @@
 package com.example.snake_bite_api.service;
 
 import com.example.snake_bite_api.controller.dto.request.CreateAdminRequestDTO;
+import com.example.snake_bite_api.controller.dto.response.AdminInteractionRequestedSnakeResponseDTO;
 import com.example.snake_bite_api.controller.dto.response.AdminResponseDTO;
 import com.example.snake_bite_api.exception.AdminNotFoundException;
 import com.example.snake_bite_api.models.Admin;
@@ -18,5 +19,8 @@ public interface AdminService {
     void deleteAdminById(Long id) throws AdminNotFoundException;
 
     Admin updateAdminById(Long id, CreateAdminRequestDTO createAdminRequestDTO) throws AdminNotFoundException;
+
+    AdminInteractionRequestedSnakeResponseDTO approveRequest(Long adminId, Long requestSnakeId);
+
 
 }

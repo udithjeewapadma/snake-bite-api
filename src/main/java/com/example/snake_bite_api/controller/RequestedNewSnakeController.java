@@ -1,6 +1,7 @@
 package com.example.snake_bite_api.controller;
 
 import com.example.snake_bite_api.controller.dto.request.CreateNewSnakeRequestDTO;
+import com.example.snake_bite_api.controller.dto.response.AdminInteractionRequestedSnakeResponseDTO;
 import com.example.snake_bite_api.controller.dto.response.NewSnakeResponseDTO;
 import com.example.snake_bite_api.exception.UserNotFoundException;
 import com.example.snake_bite_api.service.RequestedNewSnakeService;

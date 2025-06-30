@@ -2,14 +2,13 @@ package com.example.snake_bite_api.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.example.snake_bite_api.controller.dto.request.CreateNewSnakeRequestDTO;
+import com.example.snake_bite_api.controller.dto.response.AdminInteractionRequestedSnakeResponseDTO;
 import com.example.snake_bite_api.controller.dto.response.NewSnakeResponseDTO;
 import com.example.snake_bite_api.exception.UserNotFoundException;
-import com.example.snake_bite_api.models.RequestedNewSnake;
-import com.example.snake_bite_api.models.SnakeRequestStatus;
-import com.example.snake_bite_api.models.User;
-import com.example.snake_bite_api.models.Venomous;
+import com.example.snake_bite_api.models.*;
 import com.example.snake_bite_api.repository.AdminRepository;
 import com.example.snake_bite_api.repository.RequestedNewSnakeRepository;
+import com.example.snake_bite_api.repository.SnakeRepository;
 import com.example.snake_bite_api.repository.UserRepository;
 import com.example.snake_bite_api.service.RequestedNewSnakeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,9 @@ public class RequestedNewSnakeServiceImpl implements RequestedNewSnakeService {
 
     @Autowired
     private AdminRepository adminRepository;
+
+    @Autowired
+    private SnakeRepository snakeRepository;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -80,4 +82,5 @@ public class RequestedNewSnakeServiceImpl implements RequestedNewSnakeService {
         return newSnakeResponseDTO;
 
     }
+
 }
