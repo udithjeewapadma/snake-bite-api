@@ -4,11 +4,13 @@ import com.example.snake_bite_api.models.SnakeRequestStatus;
 import com.example.snake_bite_api.models.Venomous;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class NewSnakeResponseDTO {
     private Long id;
     private String name;
