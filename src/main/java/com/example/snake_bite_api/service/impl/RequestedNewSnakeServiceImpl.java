@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class RequestedNewSnakeServiceImpl implements RequestedNewSnakeService {
@@ -81,6 +82,25 @@ public class RequestedNewSnakeServiceImpl implements RequestedNewSnakeService {
         newSnakeResponseDTO.setUserId(savedSnake.getUser().getId());
         return newSnakeResponseDTO;
 
+    }
+
+    @Override
+    public List<NewSnakeResponseDTO> findAllRequests() {
+        List<RequestedNewSnake> newSnakeList = requestedNewSnakeRepository.findAll();
+        return newSnakeList.stream().map(requestedNewSnake -> {
+            NewSnakeResponseDTO newSnakeResponseDTO = new NewSnakeResponseDTO();
+            newSnakeResponseDTO.setId(requestedNewSnake.getId());
+            newSnakeResponseDTO.setName(requestedNewSnake.getName());
+            newSnakeResponseDTO.setColor(requestedNewSnake.getColor());
+            newSnakeResponseDTO.setSpecies(requestedNewSnake.getSpecies());
+            newSnakeResponseDTO.setPattern(requestedNewSnake.getPattern());
+            newSnakeResponseDTO.setAverageLength(requestedNewSnake.getAverageLength());
+            newSnakeResponseDTO.setStatus(requestedNewSnake.getStatus());
+            newSnakeResponseDTO.setUserId(requestedNewSnake.getUser().getId());
+            newSnakeResponseDTO.setImageUrls(requestedNewSnake.getImageUrl());
+            newSnakeResponseDTO.setVenomous(requestedNewSnake.getVenomous());
+            return newSnakeResponseDTO;
+        }).collect(Collectors.toList());
     }
 
 }
