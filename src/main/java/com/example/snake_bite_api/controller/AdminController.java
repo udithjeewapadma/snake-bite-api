@@ -67,4 +67,10 @@ public class AdminController {
                                                                      @RequestParam Long requestSnakeId) {
         return adminService.approveRequest(adminId, requestSnakeId);
     }
+
+    @PostMapping("/reject")
+    private AdminInteractionRequestedSnakeResponseDTO rejectRequest(@RequestParam Long adminId,
+                                                                    @RequestParam Long requestSnakeId) {
+        return adminService.rejectRequest(adminId, requestSnakeId);
+    }
 }
