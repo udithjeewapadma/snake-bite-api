@@ -4,7 +4,9 @@ import com.example.snake_bite_api.controller.dto.request.CreateAdminRequestDTO;
 import com.example.snake_bite_api.controller.dto.response.AdminInteractionRequestedSnakeResponseDTO;
 import com.example.snake_bite_api.controller.dto.response.AdminResponseDTO;
 import com.example.snake_bite_api.exception.AdminNotFoundException;
+import com.example.snake_bite_api.exception.RequestedNewSnakeNotFoundException;
 import com.example.snake_bite_api.models.Admin;
+import com.example.snake_bite_api.models.RequestedNewSnake;
 import com.example.snake_bite_api.models.Snake;
 import com.example.snake_bite_api.models.SnakeRequestStatus;
 import com.example.snake_bite_api.repository.AdminRepository;
@@ -84,23 +86,23 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public AdminInteractionRequestedSnakeResponseDTO approveRequest(Long adminId, Long requestSnakeId) {
+    public AdminInteractionRequestedSnakeResponseDTO approveRequest(Long adminId, Long requestSnakeId)
+            throws AdminNotFoundException, RequestedNewSnakeNotFoundException {
+
         var admin = adminRepository.findById(adminId)
-                .orElseThrow(() -> new RuntimeException("Admin not found"));
+                .orElseThrow(() -> new AdminNotFoundException("Admin with ID " + adminId + " not found."));
 
         var requestedNewSnake = requestedNewSnakeRepository.findById(requestSnakeId)
-                .orElseThrow(() -> new RuntimeException("Request not found"));
+                .orElseThrow(() -> new RequestedNewSnakeNotFoundException("RequestedNewSnake with ID " + requestSnakeId + " not found."));
 
         if (requestedNewSnake.getStatus() == SnakeRequestStatus.APPROVED) {
             throw new RuntimeException("This request is already approved");
         }
 
-        // Update request status and admin
         requestedNewSnake.setStatus(SnakeRequestStatus.APPROVED);
         requestedNewSnake.setAdmin(admin);
         requestedNewSnakeRepository.save(requestedNewSnake);
 
-        // Save to snake repo
         Snake snake = new Snake();
         snake.setName(requestedNewSnake.getName());
         snake.setSpecies(requestedNewSnake.getSpecies());
@@ -128,4 +130,40 @@ public class AdminServiceImpl implements AdminService {
         dto.setAdminId(requestedNewSnake.getAdmin().getId());
         return dto;
     }
+
+    @Override
+    public AdminInteractionRequestedSnakeResponseDTO rejectRequest(Long adminId, Long requestSnakeId)
+            throws AdminNotFoundException, RequestedNewSnakeNotFoundException {
+
+        Admin admin = adminRepository.findById(adminId)
+                .orElseThrow(() -> new AdminNotFoundException("Admin with ID " + adminId + " not found."));
+
+        RequestedNewSnake requestedNewSnake = requestedNewSnakeRepository.findById(requestSnakeId)
+                .orElseThrow(() -> new RequestedNewSnakeNotFoundException("RequestSnake with ID " + requestSnakeId + " not found."));
+
+        if (requestedNewSnake.getStatus() == SnakeRequestStatus.REJECTED) {
+            throw new RuntimeException("This request is already rejected");
+        }
+
+        requestedNewSnake.setStatus(SnakeRequestStatus.REJECTED);
+        requestedNewSnake.setAdmin(admin);
+
+        requestedNewSnakeRepository.save(requestedNewSnake);
+
+        AdminInteractionRequestedSnakeResponseDTO dto = new AdminInteractionRequestedSnakeResponseDTO();
+        dto.setId(requestedNewSnake.getId());
+        dto.setName(requestedNewSnake.getName());
+        dto.setColor(requestedNewSnake.getColor());
+        dto.setSpecies(requestedNewSnake.getSpecies());
+        dto.setPattern(requestedNewSnake.getPattern());
+        dto.setAverageLength(requestedNewSnake.getAverageLength());
+        dto.setVenomous(requestedNewSnake.getVenomous());
+        dto.setImageUrls(requestedNewSnake.getImageUrl());
+        dto.setStatus(requestedNewSnake.getStatus());
+        dto.setUserId(requestedNewSnake.getUser().getId());
+        dto.setAdminId(requestedNewSnake.getAdmin().getId());
+
+        return dto;
+    }
+
 }
