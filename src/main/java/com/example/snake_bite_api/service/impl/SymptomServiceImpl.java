@@ -37,6 +37,6 @@ public class SymptomServiceImpl implements SymptomService {
         symptom.setDescription(createSymptomRequestDTO.getDescription());
 
         symptom.setSnakes(new ArrayList<>(snakes));
-        return symptom;
+        return symptomRepository.save(symptom);
     }
 }
