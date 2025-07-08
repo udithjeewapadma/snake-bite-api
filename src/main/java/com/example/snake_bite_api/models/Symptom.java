@@ -20,8 +20,8 @@ public class Symptom {
     @ManyToMany
     @JoinTable(
             name = "snake_symptoms",
-            joinColumns = @JoinColumn(name = "snake_id"),
-            inverseJoinColumns = @JoinColumn(name = "symptom_id")
+            joinColumns = @JoinColumn(name = "symptom_id"),
+            inverseJoinColumns = @JoinColumn(name = "snake_id")
     )
     private List<Snake> snakes;
 

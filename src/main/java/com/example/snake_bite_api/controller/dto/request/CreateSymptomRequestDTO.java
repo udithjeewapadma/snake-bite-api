@@ -9,5 +9,5 @@ public class CreateSymptomRequestDTO {
 
     private String name;
     private String description;
-    private List<Long> symptomIds;
+    private List<Long> snakeIds;
 }
