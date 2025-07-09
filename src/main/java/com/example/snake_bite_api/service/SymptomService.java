@@ -15,4 +15,6 @@ public interface SymptomService {
     SymptomResponseDTO findSymptomById(Long id) throws SymptomNotFoundException;
 
     List<SymptomResponseDTO> findAllSymptoms();
+
+    void deleteSymptomById(Long id) throws SymptomNotFoundException;
 }

@@ -85,4 +85,12 @@ public class SymptomServiceImpl implements SymptomService {
 
         }).collect(Collectors.toList());
     }
+
+    @Override
+    public void deleteSymptomById(Long id) throws SymptomNotFoundException {
+        if (!symptomRepository.existsById(id)) {
+            throw new SymptomNotFoundException("Symptom with id " + id + " not found");
+        }
+        symptomRepository.deleteById(id);
+    }
 }
