@@ -27,4 +27,9 @@ public class Symptom {
 
     @OneToMany(mappedBy = "symptom", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<FirstAid> firstAids;
+
+    @ManyToOne
+    @JoinColumn(name = "admin_id")
+    private Admin admin;
+
 }
