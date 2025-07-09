@@ -64,4 +64,25 @@ public class SymptomServiceImpl implements SymptomService {
         symptomResponseDTO.setSnakeList(snakeDTOS);
         return symptomResponseDTO;
     }
+
+    @Override
+    public List<SymptomResponseDTO> findAllSymptoms() {
+        List<Symptom> symptoms = symptomRepository.findAll();
+        return symptoms.stream().map(symptom -> {
+            SymptomResponseDTO symptomResponseDTO = new SymptomResponseDTO();
+            symptomResponseDTO.setId(symptom.getId());
+            symptomResponseDTO.setName(symptom.getName());
+            symptomResponseDTO.setDescription(symptom.getDescription());
+
+            List<SnakeDTO> snakeDTOS = symptom.getSnakes().stream().map(snake -> {
+                SnakeDTO snakeDTO = new SnakeDTO();
+                snakeDTO.setId(snake.getId());
+                snakeDTO.setSnakeName(snake.getName());
+                return snakeDTO;
+            }).toList();
+            symptomResponseDTO.setSnakeList(snakeDTOS);
+            return symptomResponseDTO;
+
+        }).collect(Collectors.toList());
+    }
 }
