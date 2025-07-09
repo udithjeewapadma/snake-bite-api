@@ -49,4 +49,9 @@ public class SymptomController {
     public List<SymptomResponseDTO> findAllSymptoms() {
         return symptomService.findAllSymptoms();
     }
+
+    @DeleteMapping("/{symptom-id}")
+    public void deleteSymptomById(@PathVariable("symptom-id") Long symptomId) {
+        symptomService.deleteSymptomById(symptomId);
+    }
 }
