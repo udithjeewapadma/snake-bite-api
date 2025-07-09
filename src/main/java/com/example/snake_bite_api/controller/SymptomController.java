@@ -56,4 +56,29 @@ public class SymptomController {
     public void deleteSymptomById(@PathVariable("symptom-id") Long symptomId) {
         symptomService.deleteSymptomById(symptomId);
     }
+
+    @PutMapping("/{symptom-id}")
+    private SymptomResponseDTO updateSymptomById(@PathVariable("symptom-id") Long id,
+                                                 @RequestBody CreateSymptomRequestDTO createSymptomRequestDTO) {
+
+        Symptom symptom = symptomService.updateSymptomById(id,createSymptomRequestDTO);
+
+        SymptomResponseDTO symptomResponseDTO = new SymptomResponseDTO();
+        symptomResponseDTO.setId(symptom.getId());
+        symptomResponseDTO.setName(symptom.getName());
+        symptomResponseDTO.setDescription(symptom.getDescription());
+
+        symptomResponseDTO.setSnakeList(symptom.getSnakes().stream()
+                .map(snake -> {
+                    SnakeDTO snakeDTO = new SnakeDTO();
+                    snakeDTO.setId(snake.getId());
+                    snakeDTO.setSnakeName(snake.getName());
+                    return snakeDTO;
+                })
+                .toList());
+        symptomResponseDTO.setAdminId(symptom.getAdmin().getId());
+
+        return symptomResponseDTO;
+    }
+
 }
