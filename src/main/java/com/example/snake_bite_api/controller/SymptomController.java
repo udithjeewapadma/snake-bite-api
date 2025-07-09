@@ -37,4 +37,10 @@ public class SymptomController {
 
         return symptomResponseDTO;
     }
+
+    @GetMapping("/{symptom-id}")
+    public SymptomResponseDTO findSymptomById(@PathVariable("symptom-id") Long symptomId) {
+        return symptomService.findSymptomById(symptomId);
+
+    }
 }
