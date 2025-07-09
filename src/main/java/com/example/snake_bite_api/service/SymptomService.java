@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface SymptomService {
 
-    Symptom createSymptom(CreateSymptomRequestDTO createSymptomRequestDTO) throws SnakeNotFoundException;
+    Symptom createSymptom(Long adminId,CreateSymptomRequestDTO createSymptomRequestDTO) throws SnakeNotFoundException;
 
     SymptomResponseDTO findSymptomById(Long id) throws SymptomNotFoundException;
 

@@ -13,4 +13,5 @@ public class SymptomResponseDTO {
     private String name;
     private String description;
     private List<SnakeDTO> snakeList;
+    private Long adminId;
 }

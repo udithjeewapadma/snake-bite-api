@@ -3,10 +3,13 @@ package com.example.snake_bite_api.service.impl;
 import com.example.snake_bite_api.controller.dto.request.CreateSymptomRequestDTO;
 import com.example.snake_bite_api.controller.dto.response.SnakeDTO;
 import com.example.snake_bite_api.controller.dto.response.SymptomResponseDTO;
+import com.example.snake_bite_api.exception.AdminNotFoundException;
 import com.example.snake_bite_api.exception.SnakeNotFoundException;
 import com.example.snake_bite_api.exception.SymptomNotFoundException;
+import com.example.snake_bite_api.models.Admin;
 import com.example.snake_bite_api.models.Snake;
 import com.example.snake_bite_api.models.Symptom;
+import com.example.snake_bite_api.repository.AdminRepository;
 import com.example.snake_bite_api.repository.SnakeRepository;
 import com.example.snake_bite_api.repository.SymptomRepository;
 import com.example.snake_bite_api.service.SymptomService;
@@ -26,9 +29,13 @@ public class SymptomServiceImpl implements SymptomService {
     @Autowired
     private SnakeRepository snakeRepository;
 
+    @Autowired
+    private AdminRepository adminRepository;
+
 
     @Override
-    public Symptom createSymptom(CreateSymptomRequestDTO createSymptomRequestDTO) throws SnakeNotFoundException {
+    public Symptom createSymptom(Long adminId,CreateSymptomRequestDTO createSymptomRequestDTO) throws SnakeNotFoundException {
+
 
         List<Snake> snakes = snakeRepository.findAllById(createSymptomRequestDTO.getSnakeIds());
 
@@ -36,9 +43,13 @@ public class SymptomServiceImpl implements SymptomService {
             throw new SnakeNotFoundException("Some snake IDs are invalid");
         }
 
+        Admin admin = adminRepository.findById(adminId)
+                .orElseThrow(() -> new AdminNotFoundException("Admin with id " + adminId + " not found"));
+
         Symptom symptom = new Symptom();
         symptom.setName(createSymptomRequestDTO.getName());
         symptom.setDescription(createSymptomRequestDTO.getDescription());
+        symptom.setAdmin(admin);
 
         symptom.setSnakes(new ArrayList<>(snakes));
         return symptomRepository.save(symptom);
@@ -54,6 +65,7 @@ public class SymptomServiceImpl implements SymptomService {
         symptomResponseDTO.setId(symptom.getId());
         symptomResponseDTO.setName(symptom.getName());
         symptomResponseDTO.setDescription(symptom.getDescription());
+        symptomResponseDTO.setAdminId(symptom.getAdmin().getId());
 
         List<SnakeDTO> snakeDTOS = symptom.getSnakes().stream().map(snake -> {
             SnakeDTO snakeDTO = new SnakeDTO();
@@ -73,6 +85,7 @@ public class SymptomServiceImpl implements SymptomService {
             symptomResponseDTO.setId(symptom.getId());
             symptomResponseDTO.setName(symptom.getName());
             symptomResponseDTO.setDescription(symptom.getDescription());
+            symptomResponseDTO.setAdminId(symptom.getAdmin().getId());
 
             List<SnakeDTO> snakeDTOS = symptom.getSnakes().stream().map(snake -> {
                 SnakeDTO snakeDTO = new SnakeDTO();

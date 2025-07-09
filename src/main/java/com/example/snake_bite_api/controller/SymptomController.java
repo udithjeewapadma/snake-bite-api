@@ -20,9 +20,10 @@ public class SymptomController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public SymptomResponseDTO createSymptom(@RequestBody CreateSymptomRequestDTO createSymptomRequestDTO) {
+    public SymptomResponseDTO createSymptom(@RequestParam Long adminId,
+                                            @RequestBody CreateSymptomRequestDTO createSymptomRequestDTO) {
 
-        Symptom symptom = symptomService.createSymptom(createSymptomRequestDTO);
+        Symptom symptom = symptomService.createSymptom(adminId,createSymptomRequestDTO);
         SymptomResponseDTO symptomResponseDTO = new SymptomResponseDTO();
         symptomResponseDTO.setId(symptom.getId());
         symptomResponseDTO.setName(symptom.getName());
@@ -36,6 +37,7 @@ public class SymptomController {
                     return snakeDTO;
                 })
                 .toList());
+        symptomResponseDTO.setAdminId(symptom.getAdmin().getId());
 
         return symptomResponseDTO;
     }
