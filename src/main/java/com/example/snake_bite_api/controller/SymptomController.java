@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/symptoms")
 @AllArgsConstructor
@@ -41,6 +43,10 @@ public class SymptomController {
     @GetMapping("/{symptom-id}")
     public SymptomResponseDTO findSymptomById(@PathVariable("symptom-id") Long symptomId) {
         return symptomService.findSymptomById(symptomId);
+    }
 
+    @GetMapping
+    public List<SymptomResponseDTO> findAllSymptoms() {
+        return symptomService.findAllSymptoms();
     }
 }
