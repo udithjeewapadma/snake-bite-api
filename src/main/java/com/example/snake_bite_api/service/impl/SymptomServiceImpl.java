@@ -34,7 +34,8 @@ public class SymptomServiceImpl implements SymptomService {
 
 
     @Override
-    public Symptom createSymptom(Long adminId,CreateSymptomRequestDTO createSymptomRequestDTO) throws SnakeNotFoundException {
+    public Symptom createSymptom(Long adminId,CreateSymptomRequestDTO createSymptomRequestDTO)
+            throws SnakeNotFoundException, AdminNotFoundException {
 
 
         List<Snake> snakes = snakeRepository.findAllById(createSymptomRequestDTO.getSnakeIds());
@@ -106,4 +107,24 @@ public class SymptomServiceImpl implements SymptomService {
         }
         symptomRepository.deleteById(id);
     }
+
+    @Override
+    public Symptom updateSymptomById(Long id, CreateSymptomRequestDTO createSymptomRequestDTO)
+            throws SymptomNotFoundException, SnakeNotFoundException {
+
+        Symptom existingSymptom = symptomRepository.findById(id)
+                .orElseThrow(() -> new SymptomNotFoundException("Symptom with id " + id + " not found"));
+
+        List<Snake> snakes = snakeRepository.findAllById(createSymptomRequestDTO.getSnakeIds());
+        if (snakes.isEmpty() || snakes.size() != createSymptomRequestDTO.getSnakeIds().size()) {
+            throw new SnakeNotFoundException("Some snake IDs are invalid");
+        }
+
+        existingSymptom.setName(createSymptomRequestDTO.getName());
+        existingSymptom.setDescription(createSymptomRequestDTO.getDescription());
+        existingSymptom.setSnakes(new ArrayList<>(snakes));
+
+        return symptomRepository.save(existingSymptom);
+    }
+
 }
