@@ -25,4 +25,7 @@ public class Admin {
 
     @OneToMany
     private List<Symptom> symptoms;
+
+    @OneToMany
+    private List<FirstAid> firstAids;
 }
