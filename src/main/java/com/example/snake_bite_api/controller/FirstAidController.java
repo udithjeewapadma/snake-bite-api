@@ -32,4 +32,9 @@ public class FirstAidController {
 
         return firstAidResponseDTO;
     }
+
+    @GetMapping("/{aid-id}")
+    private FirstAidResponseDTO findFirstAidById(@PathVariable("aid-id") Long aidId) {
+        return firstAidService.findFirstAidById(aidId);
+    }
 }
