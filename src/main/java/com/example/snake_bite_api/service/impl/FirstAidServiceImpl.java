@@ -1,7 +1,9 @@
 package com.example.snake_bite_api.service.impl;
 
 import com.example.snake_bite_api.controller.dto.request.CreateFirstAidRequestDTO;
+import com.example.snake_bite_api.controller.dto.response.FirstAidResponseDTO;
 import com.example.snake_bite_api.exception.AdminNotFoundException;
+import com.example.snake_bite_api.exception.FirstAidNotFoundException;
 import com.example.snake_bite_api.exception.SymptomNotFoundException;
 import com.example.snake_bite_api.models.Admin;
 import com.example.snake_bite_api.models.FirstAid;
@@ -40,9 +42,19 @@ public class FirstAidServiceImpl implements FirstAidService {
         return firstAidRepository.save(firstAid);
     }
 
+    @Override
+    public FirstAidResponseDTO findFirstAidById(Long id) throws FirstAidNotFoundException {
 
-
-
+        FirstAid firstAid = firstAidRepository.findById(id)
+                .orElseThrow(() -> new FirstAidNotFoundException("FirstAid with id " + id + " not found"));
+        FirstAidResponseDTO firstAidResponseDTO = new FirstAidResponseDTO();
+        firstAidResponseDTO.setId(firstAid.getId());
+        firstAidResponseDTO.setName(firstAid.getName());
+        firstAidResponseDTO.setDescription(firstAid.getDescription());
+        firstAidResponseDTO.setAdminId(firstAid.getAdmin().getId());
+        firstAidResponseDTO.setSymptomId(firstAid.getSymptom().getId());
+        return firstAidResponseDTO;
+    }
 
 
 }
