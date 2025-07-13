@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/aids")
 @AllArgsConstructor
@@ -36,5 +38,10 @@ public class FirstAidController {
     @GetMapping("/{aid-id}")
     private FirstAidResponseDTO findFirstAidById(@PathVariable("aid-id") Long aidId) {
         return firstAidService.findFirstAidById(aidId);
+    }
+
+    @GetMapping
+    private List<FirstAidResponseDTO> findAllFirstAids() {
+        return firstAidService.findAllFirstAids();
     }
 }

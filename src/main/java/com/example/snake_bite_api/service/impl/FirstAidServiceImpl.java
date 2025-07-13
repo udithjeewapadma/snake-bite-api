@@ -15,6 +15,9 @@ import com.example.snake_bite_api.service.FirstAidService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class FirstAidServiceImpl implements FirstAidService {
@@ -54,6 +57,20 @@ public class FirstAidServiceImpl implements FirstAidService {
         firstAidResponseDTO.setAdminId(firstAid.getAdmin().getId());
         firstAidResponseDTO.setSymptomId(firstAid.getSymptom().getId());
         return firstAidResponseDTO;
+    }
+
+    @Override
+    public List<FirstAidResponseDTO> findAllFirstAids() {
+        List<FirstAid> firstAids = firstAidRepository.findAll();
+        return firstAids.stream().map(firstAid -> {
+            FirstAidResponseDTO firstAidResponseDTO = new FirstAidResponseDTO();
+            firstAidResponseDTO.setId(firstAid.getId());
+            firstAidResponseDTO.setName(firstAid.getName());
+            firstAidResponseDTO.setDescription(firstAid.getDescription());
+            firstAidResponseDTO.setAdminId(firstAid.getAdmin().getId());
+            firstAidResponseDTO.setSymptomId(firstAid.getSymptom().getId());
+            return firstAidResponseDTO;
+        }).collect(Collectors.toList());
     }
 
 
