@@ -81,5 +81,17 @@ public class FirstAidServiceImpl implements FirstAidService {
         firstAidRepository.deleteById(id);
     }
 
+    @Override
+    public FirstAid updateFirstAidById(Long id, CreateFirstAidRequestDTO createFirstAidRequestDTO) throws FirstAidNotFoundException {
+
+        FirstAid existingFirstAid = firstAidRepository.findById(id)
+                .orElseThrow(() -> new FirstAidNotFoundException("FirstAid with id " + id + " not found"));
+
+        existingFirstAid.setName(createFirstAidRequestDTO.getName());
+        existingFirstAid.setDescription(createFirstAidRequestDTO.getDescription());
+
+        return firstAidRepository.save(existingFirstAid);
+    }
+
 
 }

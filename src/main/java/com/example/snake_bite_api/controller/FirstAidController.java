@@ -49,4 +49,18 @@ public class FirstAidController {
     private void deleteFirstAidById(@PathVariable("aid-id") Long aidId) {
         firstAidService.deleteFirstAidById(aidId);
     }
+
+    @PutMapping("/{aid-id}")
+    public FirstAidResponseDTO updateFirstAidById(@PathVariable("aid-id") Long aidId,
+                                                  @RequestBody CreateFirstAidRequestDTO createFirstAidRequestDTO){
+        FirstAid firstAid = firstAidService.updateFirstAidById(aidId,createFirstAidRequestDTO);
+
+        FirstAidResponseDTO firstAidResponseDTO = new FirstAidResponseDTO();
+        firstAidResponseDTO.setId(firstAid.getId());
+        firstAidResponseDTO.setName(firstAid.getName());
+        firstAidResponseDTO.setDescription(firstAid.getDescription());
+        firstAidResponseDTO.setSymptomId(firstAid.getSymptom().getId());
+        firstAidResponseDTO.setAdminId(firstAid.getAdmin().getId());
+        return firstAidResponseDTO;
+    }
 }
