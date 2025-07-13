@@ -14,4 +14,6 @@ public interface FirstAidService {
     FirstAidResponseDTO findFirstAidById(Long id) throws FirstAidNotFoundException;
 
     List<FirstAidResponseDTO> findAllFirstAids();
+
+    void deleteFirstAidById(Long id) throws FirstAidNotFoundException;
 }

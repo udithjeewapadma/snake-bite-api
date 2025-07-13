@@ -44,4 +44,9 @@ public class FirstAidController {
     private List<FirstAidResponseDTO> findAllFirstAids() {
         return firstAidService.findAllFirstAids();
     }
+
+    @DeleteMapping("/{aid-id}")
+    private void deleteFirstAidById(@PathVariable("aid-id") Long aidId) {
+        firstAidService.deleteFirstAidById(aidId);
+    }
 }

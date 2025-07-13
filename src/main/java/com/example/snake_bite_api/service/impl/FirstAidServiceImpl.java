@@ -73,5 +73,13 @@ public class FirstAidServiceImpl implements FirstAidService {
         }).collect(Collectors.toList());
     }
 
+    @Override
+    public void deleteFirstAidById(Long id) throws FirstAidNotFoundException {
+        if (!firstAidRepository.existsById(id)) {
+            throw new FirstAidNotFoundException("FirstAid with id " + id + " not found");
+        }
+        firstAidRepository.deleteById(id);
+    }
+
 
 }
