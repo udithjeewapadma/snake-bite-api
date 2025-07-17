@@ -31,6 +31,15 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
+    @Autowired
+    public CommentServiceImpl(UserRepository userRepository,
+                              BlogRepository blogRepository,
+                              CommentRepository commentRepository) {
+        this.userRepository = userRepository;
+        this.blogRepository = blogRepository;
+        this.commentRepository = commentRepository;
+    }
+
     @Override
     public Comment createComment(Long userId, Long blogId, CreateCommentRequestDTO createCommentRequestDTO)
                     throws UserNotFoundException{
