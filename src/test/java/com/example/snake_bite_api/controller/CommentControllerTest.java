@@ -74,7 +74,7 @@ public class CommentControllerTest {
                         .content(objectMapper.writeValueAsString(createCommentRequestDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(commentResponseDTO.getId()))
-                .andExpect(jsonPath("$.comment").value(commentResponseDTO.getCommentText()))
+                .andExpect(jsonPath("$.commentText").value(commentResponseDTO.getCommentText()))
                 .andExpect(jsonPath("$.userId").value(commentResponseDTO.getUserId()))
                 .andExpect(jsonPath("$.blogId").value(commentResponseDTO.getBlogId()));
     }
@@ -86,7 +86,7 @@ public class CommentControllerTest {
         mockMvc.perform(get("/comments/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(commentResponseDTO.getId()))
-                .andExpect(jsonPath("$.comment").value(commentResponseDTO.getCommentText()))
+                .andExpect(jsonPath("$.commentText").value(commentResponseDTO.getCommentText()))
                 .andExpect(jsonPath("$.userId").value(commentResponseDTO.getUserId()))
                 .andExpect(jsonPath("$.blogId").value(commentResponseDTO.getBlogId()));
     }
@@ -98,7 +98,7 @@ public class CommentControllerTest {
         mockMvc.perform(get("/comments"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(commentResponseDTO.getId()))
-                .andExpect(jsonPath("$[0].comment").value(commentResponseDTO.getCommentText()));
+                .andExpect(jsonPath("$[0].commentText").value(commentResponseDTO.getCommentText()));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class CommentControllerTest {
                         .content(objectMapper.writeValueAsString(createCommentRequestDTO)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(commentResponseDTO.getId()))
-                .andExpect(jsonPath("$.comment").value(commentResponseDTO.getCommentText()))
+                .andExpect(jsonPath("$.commentText").value(commentResponseDTO.getCommentText()))
                 .andExpect(jsonPath("$.userId").value(commentResponseDTO.getUserId()))
                 .andExpect(jsonPath("$.blogId").value(commentResponseDTO.getBlogId()));
     }

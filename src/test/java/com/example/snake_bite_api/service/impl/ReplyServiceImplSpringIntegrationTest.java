@@ -48,7 +48,7 @@ class ReplyServiceImplSpringIntegrationTest {
         user = userRepository.save(user);
 
         comment = new Comment();
-        comment.setComment("Test comment");
+        comment.setCommentText("Test comment");
         comment.setUser(user);
         comment = commentRepository.save(comment);
     }
