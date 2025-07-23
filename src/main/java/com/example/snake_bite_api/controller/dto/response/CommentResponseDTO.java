@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class CommentResponseDTO {
 
     private Long id;
-    private String comment;
+    private String commentText;
     private long userId;
     private long blogId;
 }

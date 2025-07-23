@@ -25,7 +25,7 @@ public class CommentController {
         Comment comment = commentService.createComment(userId, blogId, createCommentRequestDTO);
         CommentResponseDTO commentResponseDTO = new CommentResponseDTO();
         commentResponseDTO.setId(comment.getId());
-        commentResponseDTO.setComment(comment.getComment());
+        commentResponseDTO.setComment(comment.getCommentText());
         commentResponseDTO.setUserId(comment.getUser().getId());
         commentResponseDTO.setBlogId(comment.getBlog().getId());
         return commentResponseDTO;
@@ -52,7 +52,7 @@ public class CommentController {
         Comment comment = commentService.updateCommentById(commentId, createCommentRequestDTO);
         CommentResponseDTO commentResponseDTO = new CommentResponseDTO();
         commentResponseDTO.setId(comment.getId());
-        commentResponseDTO.setComment(comment.getComment());
+        commentResponseDTO.setComment(comment.getCommentText());
         commentResponseDTO.setUserId(comment.getUser().getId());
         commentResponseDTO.setBlogId(comment.getBlog().getId());
         return commentResponseDTO;

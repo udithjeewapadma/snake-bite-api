@@ -51,7 +51,7 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new BlogNotFoundException("Blog with id " + blogId + " not found"));
 
         Comment comment = new Comment();
-        comment.setComment(createCommentRequestDTO.getComment());
+        comment.setCommentText(createCommentRequestDTO.getCommentText());
         comment.setUser(user);
         comment.setBlog(blog);
         return commentRepository.save(comment);
@@ -65,7 +65,7 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new CommentNotFoundException("Comment with id " + id + " not found"));
         CommentResponseDTO commentResponseDTO = new CommentResponseDTO();
         commentResponseDTO.setId(comment.getId());
-        commentResponseDTO.setComment(comment.getComment());
+        commentResponseDTO.setCommentText(comment.getCommentText());
         commentResponseDTO.setUserId(comment.getUser().getId());
         commentResponseDTO.setBlogId(comment.getBlog().getId());
         return commentResponseDTO;
@@ -78,7 +78,7 @@ public class CommentServiceImpl implements CommentService {
         return comments.stream().map(comment -> {
             CommentResponseDTO commentResponseDTO = new CommentResponseDTO();
             commentResponseDTO.setId(comment.getId());
-            commentResponseDTO.setComment(comment.getComment());
+            commentResponseDTO.setCommentText(comment.getCommentText());
             commentResponseDTO.setUserId(comment.getUser().getId());
             commentResponseDTO.setBlogId(comment.getBlog().getId());
             return commentResponseDTO;
@@ -98,7 +98,7 @@ public class CommentServiceImpl implements CommentService {
 
         Comment existingComment = commentRepository.findById(id)
                 .orElseThrow(() -> new CommentNotFoundException("Comment with id " + id + " not found"));
-        existingComment.setComment(createCommentRequestDTO.getComment());
+        existingComment.setCommentText(createCommentRequestDTO.getCommentText());
         return commentRepository.save(existingComment);
     }
 }

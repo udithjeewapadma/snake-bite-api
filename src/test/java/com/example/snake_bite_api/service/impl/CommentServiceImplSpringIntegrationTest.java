@@ -57,12 +57,12 @@ class CommentServiceImplSpringIntegrationTest {
     @Test
     void createComment_Success() throws UserNotFoundException {
         CreateCommentRequestDTO dto = new CreateCommentRequestDTO();
-        dto.setComment("This is an integration comment");
+        dto.setCommentText("This is an integration comment");
 
         Comment comment = commentService.createComment(userId, blogId, dto);
 
         assertThat(comment).isNotNull();
-        assertThat(comment.getComment()).isEqualTo(dto.getComment());
+        assertThat(comment.getCommentText()).isEqualTo(dto.getCommentText());
         assertThat(comment.getUser().getId()).isEqualTo(userId);
         assertThat(comment.getBlog().getId()).isEqualTo(blogId);
     }
@@ -70,7 +70,7 @@ class CommentServiceImplSpringIntegrationTest {
     @Test
     void findCommentById_Success() throws Exception {
         Comment comment = new Comment();
-        comment.setComment("Integration comment");
+        comment.setCommentText("Integration comment");
         comment.setUser(userRepository.findById(userId).orElseThrow());
         comment.setBlog(blogRepository.findById(blogId).orElseThrow());
         Comment saved = commentRepository.save(comment);
@@ -78,13 +78,13 @@ class CommentServiceImplSpringIntegrationTest {
         CommentResponseDTO found = commentService.findCommentById(saved.getId());
 
         assertEquals(saved.getId(), found.getId());
-        assertEquals("Integration comment", found.getComment());
+        assertEquals("Integration comment", found.getCommentText());
     }
 
     @Test
     void deleteCommentById_Success() {
         Comment comment = new Comment();
-        comment.setComment("To delete");
+        comment.setCommentText("To delete");
         comment.setUser(userRepository.findById(userId).orElseThrow());
         comment.setBlog(blogRepository.findById(blogId).orElseThrow());
         Comment saved = commentRepository.save(comment);
@@ -97,7 +97,7 @@ class CommentServiceImplSpringIntegrationTest {
     @Test
     void findAllComments_ReturnsList() {
         Comment comment = new Comment();
-        comment.setComment("A comment");
+        comment.setCommentText("A comment");
         comment.setUser(userRepository.findById(userId).orElseThrow());
         comment.setBlog(blogRepository.findById(blogId).orElseThrow());
         commentRepository.save(comment);
@@ -109,16 +109,16 @@ class CommentServiceImplSpringIntegrationTest {
     @Test
     void updateCommentById_Success() {
         Comment comment = new Comment();
-        comment.setComment("Old");
+        comment.setCommentText("Old");
         comment.setUser(userRepository.findById(userId).orElseThrow());
         comment.setBlog(blogRepository.findById(blogId).orElseThrow());
         Comment saved = commentRepository.save(comment);
 
         CreateCommentRequestDTO update = new CreateCommentRequestDTO();
-        update.setComment("Updated Comment");
+        update.setCommentText("Updated Comment");
 
         Comment updated = commentService.updateCommentById(saved.getId(), update);
-        assertEquals("Updated Comment", updated.getComment());
+        assertEquals("Updated Comment", updated.getCommentText());
     }
 
     @Test

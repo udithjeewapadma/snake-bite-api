@@ -48,18 +48,18 @@ public class CommentControllerTest {
 
         comment = new Comment();
         comment.setId(1L);
-        comment.setComment("This is a comment");
+        comment.setCommentText("This is a comment");
         comment.setUser(user);
         comment.setBlog(blog);
 
         commentResponseDTO = new CommentResponseDTO();
         commentResponseDTO.setId(comment.getId());
-        commentResponseDTO.setComment(comment.getComment());
+        commentResponseDTO.setCommentText(comment.getCommentText());
         commentResponseDTO.setUserId(user.getId());
         commentResponseDTO.setBlogId(blog.getId());
 
         createCommentRequestDTO = new CreateCommentRequestDTO();
-        createCommentRequestDTO.setComment("This is a comment");
+        createCommentRequestDTO.setCommentText("This is a comment");
     }
 
     @Test
@@ -74,7 +74,7 @@ public class CommentControllerTest {
                         .content(objectMapper.writeValueAsString(createCommentRequestDTO)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").value(commentResponseDTO.getId()))
-                .andExpect(jsonPath("$.comment").value(commentResponseDTO.getComment()))
+                .andExpect(jsonPath("$.comment").value(commentResponseDTO.getCommentText()))
                 .andExpect(jsonPath("$.userId").value(commentResponseDTO.getUserId()))
                 .andExpect(jsonPath("$.blogId").value(commentResponseDTO.getBlogId()));
     }
@@ -86,7 +86,7 @@ public class CommentControllerTest {
         mockMvc.perform(get("/comments/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(commentResponseDTO.getId()))
-                .andExpect(jsonPath("$.comment").value(commentResponseDTO.getComment()))
+                .andExpect(jsonPath("$.comment").value(commentResponseDTO.getCommentText()))
                 .andExpect(jsonPath("$.userId").value(commentResponseDTO.getUserId()))
                 .andExpect(jsonPath("$.blogId").value(commentResponseDTO.getBlogId()));
     }
@@ -98,7 +98,7 @@ public class CommentControllerTest {
         mockMvc.perform(get("/comments"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(commentResponseDTO.getId()))
-                .andExpect(jsonPath("$[0].comment").value(commentResponseDTO.getComment()));
+                .andExpect(jsonPath("$[0].comment").value(commentResponseDTO.getCommentText()));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class CommentControllerTest {
                         .content(objectMapper.writeValueAsString(createCommentRequestDTO)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(commentResponseDTO.getId()))
-                .andExpect(jsonPath("$.comment").value(commentResponseDTO.getComment()))
+                .andExpect(jsonPath("$.comment").value(commentResponseDTO.getCommentText()))
                 .andExpect(jsonPath("$.userId").value(commentResponseDTO.getUserId()))
                 .andExpect(jsonPath("$.blogId").value(commentResponseDTO.getBlogId()));
     }

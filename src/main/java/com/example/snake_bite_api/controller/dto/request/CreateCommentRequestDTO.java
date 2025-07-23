@@ -11,5 +11,5 @@ import lombok.Data;
 public class CreateCommentRequestDTO {
 
     @NotBlank(message = "User name cannot be blank")
-    private String comment;
+    private String commentText;
 }

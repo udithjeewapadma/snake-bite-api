@@ -13,7 +13,7 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String comment;
+    private String commentText;
 
     @ManyToOne
     @JoinColumn(name = "blog_id")

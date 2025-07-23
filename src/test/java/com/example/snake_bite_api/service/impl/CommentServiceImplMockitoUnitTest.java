@@ -47,7 +47,7 @@ class CommentServiceImplMockitoUnitTest {
         blog.setId(blogId);
 
         CreateCommentRequestDTO dto = new CreateCommentRequestDTO();
-        dto.setComment("Nice blog!");
+        dto.setCommentText("Nice blog!");
 
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         when(blogRepository.findById(blogId)).thenReturn(Optional.of(blog));
@@ -55,7 +55,7 @@ class CommentServiceImplMockitoUnitTest {
 
         Comment saved = commentService.createComment(userId, blogId, dto);
 
-        assertEquals("Nice blog!", saved.getComment());
+        assertEquals("Nice blog!", saved.getCommentText());
         assertEquals(user, saved.getUser());
         assertEquals(blog, saved.getBlog());
     }
@@ -72,7 +72,7 @@ class CommentServiceImplMockitoUnitTest {
     void findCommentById_Success() {
         Comment comment = new Comment();
         comment.setId(1L);
-        comment.setComment("Test Comment");
+        comment.setCommentText("Test Comment");
 
         User user = new User();
         user.setId(5L);
@@ -88,7 +88,7 @@ class CommentServiceImplMockitoUnitTest {
         CommentResponseDTO dto = commentService.findCommentById(1L);
 
         assertEquals(1L, dto.getId());
-        assertEquals("Test Comment", dto.getComment());
+        assertEquals("Test Comment", dto.getCommentText());
         assertEquals(5L, dto.getUserId());
         assertEquals(9L, dto.getBlogId());
     }
@@ -103,7 +103,7 @@ class CommentServiceImplMockitoUnitTest {
     void findAllComments_ReturnsAll() {
         Comment c1 = new Comment();
         c1.setId(1L);
-        c1.setComment("A");
+        c1.setCommentText("A");
 
         User user = new User();
         user.setId(1L);
@@ -118,7 +118,7 @@ class CommentServiceImplMockitoUnitTest {
 
         List<CommentResponseDTO> result = commentService.findAllComments();
         assertEquals(1, result.size());
-        assertEquals("A", result.get(0).getComment());
+        assertEquals("A", result.get(0).getCommentText());
     }
 
     @Test
@@ -138,15 +138,15 @@ class CommentServiceImplMockitoUnitTest {
     void updateCommentById_Success() {
         Comment existing = new Comment();
         existing.setId(4L);
-        existing.setComment("Old");
+        existing.setCommentText("Old");
 
         CreateCommentRequestDTO dto = new CreateCommentRequestDTO();
-        dto.setComment("New");
+        dto.setCommentText("New");
 
         when(commentRepository.findById(4L)).thenReturn(Optional.of(existing));
         when(commentRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
         Comment updated = commentService.updateCommentById(4L, dto);
-        assertEquals("New", updated.getComment());
+        assertEquals("New", updated.getCommentText());
     }
 }
