@@ -4,7 +4,7 @@ import com.example.snake_bite_api.controller.dto.request.CreateBlogRequestDTO;
 import com.example.snake_bite_api.controller.dto.response.BlogResponseDTO;
 import com.example.snake_bite_api.exception.BlogNotFoundException;
 import com.example.snake_bite_api.exception.UserNotFoundException;
-import com.example.snake_bite_api.models.Blog;
+
 
 import java.io.IOException;
 import java.util.List;

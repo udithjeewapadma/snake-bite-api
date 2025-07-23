@@ -7,6 +7,7 @@ import com.example.snake_bite_api.models.Admin;
 import com.example.snake_bite_api.service.AdminService;
 import com.example.snake_bite_api.service.RequestedNewSnakeService;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +17,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admins")
+@AllArgsConstructor
 public class AdminController {
 
-    @Autowired
-    private AdminService adminService;
+    private final AdminService adminService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -50,7 +51,7 @@ public class AdminController {
     }
 
     @PutMapping("/{admin-id}")
-    private AdminResponseDTO updateAdmin(@PathVariable("admin-id") Long id,
+    public AdminResponseDTO updateAdmin(@PathVariable("admin-id") Long id,
                                          @RequestBody CreateAdminRequestDTO createAdminRequestDTO) {
         Admin admin = adminService.updateAdminById(id, createAdminRequestDTO);
         AdminResponseDTO adminResponseDTO = new AdminResponseDTO();
@@ -63,13 +64,13 @@ public class AdminController {
 
 
     @PostMapping("/approve")
-    private AdminInteractionRequestedSnakeResponseDTO approveRequest(@RequestParam Long adminId,
+    public AdminInteractionRequestedSnakeResponseDTO approveRequest(@RequestParam Long adminId,
                                                                      @RequestParam Long requestSnakeId) {
         return adminService.approveRequest(adminId, requestSnakeId);
     }
 
     @PostMapping("/reject")
-    private AdminInteractionRequestedSnakeResponseDTO rejectRequest(@RequestParam Long adminId,
+    public AdminInteractionRequestedSnakeResponseDTO rejectRequest(@RequestParam Long adminId,
                                                                     @RequestParam Long requestSnakeId) {
         return adminService.rejectRequest(adminId, requestSnakeId);
     }

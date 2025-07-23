@@ -4,7 +4,6 @@ import com.example.snake_bite_api.controller.dto.request.CreateSnakeRequestDTO;
 import com.example.snake_bite_api.controller.dto.response.SnakeResponseDTO;
 import com.example.snake_bite_api.exception.AdminNotFoundException;
 import com.example.snake_bite_api.exception.SnakeNotFoundException;
-import com.example.snake_bite_api.models.Snake;
 
 import java.io.IOException;
 import java.util.List;
