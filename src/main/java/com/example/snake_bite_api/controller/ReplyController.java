@@ -27,7 +27,7 @@ public class ReplyController {
         ReplyResponseDTO replyResponseDTO = new ReplyResponseDTO();
         replyResponseDTO.setId(reply.getId());
         replyResponseDTO.setReplyBody(reply.getReplyBody());
-        replyResponseDTO.setCommentId(reply.getUser().getId());
+        replyResponseDTO.setCommentId(reply.getComment().getId());
         replyResponseDTO.setUserId(reply.getUser().getId());
         return replyResponseDTO;
     }
@@ -48,13 +48,14 @@ public class ReplyController {
     }
 
     @PutMapping("/{reply-id}")
-    public ReplyResponseDTO updateReply(@PathVariable("reply-id") Long replyId, CreateReplyRequestDTO createReplyRequestDTO){
+    public ReplyResponseDTO updateReply(@PathVariable("reply-id") Long replyId,
+                                        @RequestBody CreateReplyRequestDTO createReplyRequestDTO){
 
         Reply reply = replyService.updateReplyById(replyId, createReplyRequestDTO);
         ReplyResponseDTO replyResponseDTO = new ReplyResponseDTO();
         replyResponseDTO.setId(reply.getId());
         replyResponseDTO.setReplyBody(reply.getReplyBody());
-        replyResponseDTO.setCommentId(reply.getUser().getId());
+        replyResponseDTO.setCommentId(reply.getComment().getId());
         replyResponseDTO.setUserId(reply.getUser().getId());
         return replyResponseDTO;
     }
